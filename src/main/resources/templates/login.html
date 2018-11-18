@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/bootstrapValidate/bootstrapValidator.css" ></script>
+    <script src="/bootstrapValidate/bootstrapValidator.js" ></script>
+    <script type="text/javascript" src="/js/bootstrapValidate.js"></script>
+    <script  src="/js/admins/login_check.js"></script>
+    <script>
+   </script>
+</head>
+<body>
+<div class="row bg">
+    <div class="container  ">
+        <div class="projects-header page-header text-center">
+            <h2>用户登录</h2>
+        </div>
+        <div class="well">
+            <br>
+            <form th:action="@{/login_valid}" onsubmit="return false" id="loginForm" class="form-horizontal" role="form" th:method="POST" enctype="multipart/form-data" >
+                <div style="display:none">
+                    <input name="flag" value="true">
+                </div>
+                <div class="form-group ">
+                    <label for="" class="col-sm-4 control-label">用户名:</label>  <!--placeholder="frank"  -->
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+                    </div>
+                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${errorstatus}"></label>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-4 control-label">密码:</label>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+                    </div>
+                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${errorstatus}"></label>
+                </div>
+                <div class="form-group">
+                <label for="" class="col-sm-4 control-label"></label>
+                <div class="col-md-5">
+                    <button class="btn btn-primary btn-lg btn-block" type="button" onclick="login_check()">登录</button>
+                </div>
+            </div>
+                <div>
+                    <label for="" class="col-sm-8 control-label"></label>
+                    <div class="col-md-2">
+                        <a>忘记密码?</a>
+                    </div>
+                </div>
+                <br><br><br>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

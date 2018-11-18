@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--不能引入jquery会和主界面js冲突导致bootstrapvalidator异常-->
+    <!--<script src="/bt/js/jquery.min.js" ></script>-->
+    <script src="/bootstrapValidate/bootstrapValidator.css" ></script>
+    <script src="/bootstrapValidate/bootstrapValidator.js" ></script>
+    <script type="text/javascript" src="/js/bootstrapValidate.js"></script>
+    <style>
+        <!--调整madal背景模糊度-->
+        /*.modal-backdrop {*/
+            /*opacity: 0.2 !important;*/
+            /*filter: alpha(opacity=0) !important;*/
+        /*}*/
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <br>
+            <p><!--data-toggle="modal" data-target="#myModal"-->
+                <button class="btn btn-primary btn-add"  type="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;新增论文</button>
+                <button class="btn btn-info btn-upd" type="button"><i class="fa fa-paste"></i> 编辑</button>
+                <button class="btn btn-success btn-del" type="button" onclick="deletePaper();">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;删除
+                </button>
+            </p>
+            <table class="table table-bordered table-hover">
+                <caption>论文列表</caption>
+                <thead>
+                <tr>
+                    <th><input type="checkbox" id="mainCheckbox"></th>
+                    <th>编号</th>
+                    <th>标题</th>
+                    <th>原文链接</th>
+                    <th>上传日期</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="paper : ${model.list}">
+                      <th><input type="checkbox" class="cb" th:attr="id=${paper.id},title=${paper.title}" ></th>
+                      <th id="user" th:attr="username=${paper.username}" th:text="${paper.id}"></th>
+                      <th th:text="${paper.title}"></th>
+                      <th><a th:href="${paper.path}"target="_blank">查看原文</a></th>
+                      <th th:text="${paper.date}"></th>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center" id="myModalLabel" >
+                     上传论文
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="upForm" th:action="@{/upload/paper}" target="frameName" onsubmit="return false" class="form-horizontal" role="form" method="post" enctype="multipart/form-data" >
+                    <div class="form-group ">
+                        <label for="" class="col-sm-2 control-label">标题:</label>  <!--placeholder="frank"  -->
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control"  name="title" placeholder="请输入论文标题">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">文件:</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="file" name="file" placeholder="请输入密码">
+                        </div>
+                    </div>
+                </form>
+                <iframe src="" frameborder="0" name="frameName" style="display:none;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closemodal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="upload_check();" >
+                    上传
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+    <!--*******************************************************************************************************-->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-center">
+                        论文编辑
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="updateForm" th:action="@{/update/paper}" target="frameName" onsubmit="return false" class="form-horizontal" role="form" method="post" enctype="multipart/form-data" >
+                        <div class="form-group" style="display:none">
+                            <label for="" class="col-sm-2 control-label">ID</label>  <!--placeholder="frank"  -->
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="updateId" name="updateId">
+                            </div>
+                        </div>
+                        <div class="form-group" style="display:none">
+                            <label for="" class="col-sm-2 control-label">username</label>  <!--placeholder="frank"  -->
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="updateUsername" name="updateUsername">
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="" class="col-sm-2 control-label">标题:</label>  <!--placeholder="frank"  -->
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="updateTitle" name="updateTitle" placeholder="请输入论文标题">
+                            </div>
+                        </div>
+                    </form>
+                    <iframe src="" frameborder="0" name="frameName" style="display:none;"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closeupdatemodal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="update_check();" >
+                        更新
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+
+    <!--************************************************************************************************-->
+</div>
+    <script th:src="@{/js/admins/formvalidator.js}"></script>
+    <script th:src="@{/js/admins/submit.js}"></script>
+    <script th:src="@{/js/admins/deletePaper.js}"></script>
+    <script th:src="@{/js/admins/checkBoxClick.js}"></script>
+    <script th:src="@{/js/admins/updateFormCheck.js}"></script>
+</body>
+</html>

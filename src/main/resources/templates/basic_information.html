@@ -1,0 +1,61 @@
+
+<!--个人基础信息展示页面-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style type="text/css">
+        span{font-size:25px}
+        p{font-size:25px}
+        .ff{
+            padding-top: 0px;
+        }
+    </style>
+</head>
+<div class="row ">
+    <div class="container">
+        <div class="projects-header page-header">
+           <button class="btn btn-default">编辑</button>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <img th:src="${user_info.picture}" width="180px" height="250px">
+            </div>
+            <dic class="col-sm-10 ff">
+                <strong>  <h1 th:text="${user_info.name}"></h1></strong>
+                <div class="row">
+                  <div class="col-md-5">
+                      <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true" >性别:<span th:text="${user_info.sex}"></span></span>
+                  </div>
+                  <div class="col-md-7">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true" >籍贯:<span th:text="${user_info.birthplace}"></span></span>
+                  </div>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-cloud " aria-hidden="true" >年龄:<span th:text="${user_info.age}"></span></span><br>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-education " aria-hidden="true" >所在高校:<span th:text="${user_info.school}"></span></span><br>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-earphone" aria-hidden="true" >电话号码:<span th:text="${user_info.tel}"></span></span><br>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true" >电子邮箱:<span th:text="${user_info.email}"></span></span><br>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-search" aria-hidden="true" >研究方向:<span th:text="${user_info.research_direct}"></span></span><br>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true" >身份:<span th:text="${user_info.identity}"></span></span><br>
+                </div>
+           </dic>
+        </div>
+       <span> 简介:<p th:text="${user_info.self_introduction}"></p></span>
+    </div>
+</div>
+</body>
+</html>

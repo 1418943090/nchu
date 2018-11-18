@@ -1,0 +1,80 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/bt/css/bootstrap.css">
+    <script src="/assets/jquery-2.1.4.min.js" ></script>
+    <script src="/bt/js/jquery.min.js" ></script>
+    <script src="/bt/js/bootstrap.js" ></script>
+    <script src="/bt/js/holder.js" ></script>
+
+    <script src="/bootstrapValidate/bootstrapValidator.css" ></script>
+    <script src="/bootstrapValidate/bootstrapValidator.js" ></script>
+    <script type="text/javascript" src="/js/login.js"></script>
+    <script type="text/javascript" src="/js/bootstrapValidate.js"></script>
+    <script type="text/javascript" src="/js/loginValidate.js"></script>
+    <script type="text/javascript" src="/md5/md5.js"></script>
+    <script type="text/javascript" src="/js/show_login_model.js"></script>
+    <script type="text/javascript" src="/js/show_registered_model.js"></script>
+
+    <title>短租网</title>
+</head>
+
+<body>
+
+<!-- 巨幕 -->
+<div class="jumbotron">
+    <div class="text-center">
+        <h1>Hello</h1>
+        <h2>欢迎访问短租网</h2>
+        <a class="btn btn-primary btn-lg" href="#" role="button" onclick="show_registered_model();">注册</a>
+        <a class="btn btn-primary btn-lg" href="#" role="button" onclick="show_login_model();">登录</a>
+    </div>
+</div>
+
+<div class="modal fade" id="registered_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                注册成功，即将进入登录界面。
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 登录模态框（Modal） -->
+<div class="modal fade" id="login_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="loginForm" th:action="@{/test_login1.action}" class="form-horizontal" role="form" method="post" enctype="multipart/form-data" >
+                    <div class="form-group ">
+                        <label for="" class="col-sm-2 control-label">用户名:</label>  <!--placeholder="frank"  -->
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control"  name="username" placeholder="请输入用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">密码:</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password_md5" name="password" placeholder="请输入密码">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" >忘记密码
+                </button>
+                <button onclick="login_check();"type="button" class="btn btn-primary">
+                    登录
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
