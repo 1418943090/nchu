@@ -15,8 +15,9 @@
         padding-right: 50px;;
     }
     .jumbotron{
-        background:url("/img/main.jpg");
-        padding-top: 200px;
+        background:url("/img/index2.jpg");
+        background-size:100%;
+        padding-top: 200px
     }
 </style>
 </head>
@@ -26,17 +27,17 @@
     <div class="navbar-header">
         <ul class="nav navbar-nav navbar-left">
             <li>
-                <a> <h5><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
+                <a> <h5 style="color:white"><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
             </li>
         </ul>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a th:href="@{/login}"  th:method="POST" th:type="post"><h5><strong>了解更多</strong></h5></a>
+                <a th:href="@{/more}"  th:method="POST" th:type="post"><h5 style="color: white"><strong>了解更多</strong></h5></a>
             </li>
             <li class="dropdown" th:unless="#{username}==null">
-                <a id="aa" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${username}"></a>
+                <a id="aa" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${username}" style="color: white"></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">修改密码</a></li>
                     <li><a th:href="@{'/user/'+${username}}">个人中心</a></li>
@@ -46,10 +47,10 @@
                 </ul>
             </li>
             <li th:if="${username}==null">
-                <a th:href="@{/login}"  th:method="POST" th:type="post"><h5><strong>登录</strong></h5></a>
+                <a th:href="@{/login}"  th:method="POST" th:type="post"><h5 style="color: white"><strong>登录</strong></h5></a>
             </li>
             <li th:if="${username}==null">
-              <a th:href="@{/registry}" th:method="POST" th:type="post"><h5><strong>注册</strong></h5></a>
+              <a th:href="@{/registry}" th:method="POST" th:type="post"><h5 style="color: white"><strong>注册</strong></h5></a>
             </li>
         </ul>
     </div>

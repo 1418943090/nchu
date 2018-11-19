@@ -42,12 +42,23 @@
                 });
         });
     </script>
+
+    <style>
+        .container{
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+        .bg {
+            background:url(/img/login2.jpg)   fixed;
+            background-size:100%;
+        }
+    </style>
 </head>
 <body>
 <div class="row bg">
     <div class="container  ">
         <div class="projects-header page-header text-center">
-            <h2>用户注册</h2>
+            <h2 style="color: white">用户注册</h2>
         </div>
         <div class="well">
             <form th:action="@{/registry_action}" id="RegisteredForm" class="form-horizontal" role="form" th:method="post" enctype="multipart/form-data" >

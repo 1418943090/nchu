@@ -57,7 +57,7 @@ public class UserInfo  implements Serializable {
     @NotBlank(message="请输入密码")
     @Length(max=20,message = "密码长度超过20个字符")
     @Pattern(regexp = "^.*(?=.{6,})(?=.*\\d)(?=.*[A-Z])(?=.*[a-z]).*$",
-             message="请检查密码是否输入是否符合要求")
+             message="密码安全强度不够")
     @Transient
     public String getFirstpassword() {
         return firstpassword;
@@ -68,7 +68,7 @@ public class UserInfo  implements Serializable {
     @NotBlank(message="请输入密码")
     @Length(max=20,message = "密码长度超过20个字符")
     @Pattern(regexp = "^.*(?=.{6,})(?=.*\\d)(?=.*[A-Z])(?=.*[a-z]).*$",
-            message="请检查密码是否输入符合要求")
+            message="密码安全强度不够")
     @Transient
     public String getSecondpassword() {
         return secondpassword;
@@ -171,7 +171,7 @@ public class UserInfo  implements Serializable {
     }
 
     @NotBlank(message = "请输入自我简介")
-    @Length(max=120,message = "你的简介太长了哦数据库存不下呢")
+    @Length(max=120,message = "简介字数超过限制了")
     public String getSelf_introduction() {
         return self_introduction;
     }
