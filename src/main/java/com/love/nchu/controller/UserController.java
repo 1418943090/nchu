@@ -15,7 +15,6 @@ public class UserController {
 
     @GetMapping("user/{username}")
     public ModelAndView user(@PathVariable("username") String username, Model model){
-
         List<Menu> list = new ArrayList();
         list.add(new Menu("基本信息","/basic_information/"+username));
         list.add(new Menu("发表论文","/papers/"+username));

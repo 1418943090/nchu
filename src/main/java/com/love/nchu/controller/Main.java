@@ -1,40 +1,33 @@
 package com.love.nchu.controller;
-
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.jws.WebParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-
 @RestController
 public class Main {
-
-    @RequestMapping("/")
+    @GetMapping("/")
     public ModelAndView main(){
         return new ModelAndView("redirect:/index");
     }
-
-    @RequestMapping(value = "/index")
+    @GetMapping(value = "/index")
     public ModelAndView index(Model model, HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
         if(cookies!=null){
-        for(Cookie cookie2 : cookies){
-            if(cookie2.getName().equals("user")){
+           for(Cookie cookie2 : cookies){
+             if(cookie2.getName().equals("user")){
                 model.addAttribute("username",cookie2.getValue());
-            }
-        }}
+             }
+           }
+        }
         return new ModelAndView("index","login-success",model);
     }
-
-    @RequestMapping("/more")
+    @GetMapping("/more")
     public ModelAndView getMore(){
         return new ModelAndView("more");
     }
-
-    @RequestMapping("/forgetPassword")
+    @GetMapping("/forgetPassword")
     public ModelAndView forgetPassword(){
         return new ModelAndView("forgetPassword");
     }
