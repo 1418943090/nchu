@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>error</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
@@ -21,15 +21,33 @@
             height:100%;
             border: 1px solid #00457b;
             padding: 8px;
+            font-size: .85em;
         }
-
+        .title{
+            color: white;
+            font-size: 2em;
+        }
+        .container{
+            padding-top: 3%;
+        }
     </style>
 </head>
 <body>
+<nav class="navbar  navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a  th:href="@{/index}"  th:method="POST" th:type="post"><h5 class="title"><strong>回到主页</strong></h5></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="row bg">
     <div class="container">
         <br><br>
-        <h1 class="text-center" style="color: white">程序猿正在紧张的开发该功能当中</h1>
+        <h1 class="text-center" style="color: white">>_<|||  Oh My God 服务器一不小心又出出错,请刷新试试,或者联系管理员(QQ:1418943090)</h1>
     </div>
 </div>
 </body>

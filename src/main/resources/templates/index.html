@@ -5,64 +5,74 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>主页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
+
+
+
     #aa{
         font-size: large;
         padding-right: 50px;;
     }
     .jumbotron{
-        background:url("/img/index2.jpg");
-        background-size:100%;
-        padding-top: 200px
+        background:url("/img/index2.jpg") fixed;
+        background-size:100% 100%;
+        padding-top: 11%;
+        padding-bottom: 30%;
+    }
+    .title{
+        font-size: 1.5em;
+        color: white;
+    }
+    #aa{
+
+        font-size: 1.5em;
     }
 </style>
 </head>
 <body>
-<div class="navbar  navbar-fixed-top">
-<nav class="navbar  navbar-dark" role="navigation">
+<nav class="navbar  navbar-fixed-top">
+    <div class="container-fluid">
     <div class="navbar-header">
         <ul class="nav navbar-nav navbar-left">
             <li>
-                <a> <h5 style="color:white"><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
+                <a> <h5 class="title" style="color:white"><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
             </li>
         </ul>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a th:href="@{/more}"  th:method="POST" th:type="post"><h5 style="color: white"><strong>了解更多</strong></h5></a>
+                <a th:href="@{/more}"  th:method="POST" th:type="post"><h5 style="color: white" class="title"><strong>了解更多</strong></h5></a>
             </li>
             <li class="dropdown" th:unless="#{username}==null">
-                <a id="aa" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${username}" style="color: white"></a>
+                <a id="aa" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  style="color: white;"  ><h5  style="font-size: 1em"><strong><p th:text="${username}" ></p></strong></h5></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">修改密码</a></li>
+                    <li><a th:href="@{/changePassword}">修改密码</a></li>
                     <li><a th:href="@{'/user/'+${username}}">个人中心</a></li>
-                    <li><a href="#">我的发布</a></li>
+                    <!--<li><a href="#">我的发布</a></li>-->
                     <li role="separator" class="divider"></li>
                     <li><a th:href="@{/log_out}" th:method="POST">退出登录</a></li>
                 </ul>
             </li>
             <li th:if="${username}==null">
-                <a th:href="@{/login}"  th:method="POST" th:type="post"><h5 style="color: white"><strong>登录</strong></h5></a>
+                <a th:href="@{/login}"  th:method="POST" th:type="post"><h5  class="title"><strong>登录</strong></h5></a>
             </li>
             <li th:if="${username}==null">
-              <a th:href="@{/registry}" th:method="POST" th:type="post"><h5 style="color: white"><strong>注册</strong></h5></a>
+              <a th:href="@{/registry}" th:method="POST" th:type="post"><h5  class="title"><strong>注册</strong></h5></a>
             </li>
         </ul>
     </div>
+    </div>
 </nav>
-</div>
 <div class="jumbotron">
     <div class="text-center">
-        <br>
         <h1>南昌航空大学</h1>
         <h2>物联网研究所</h2>
-        <br><br><br>
-        <br><br><br><br>
     </div>
 </div>
 <div class="page-content">

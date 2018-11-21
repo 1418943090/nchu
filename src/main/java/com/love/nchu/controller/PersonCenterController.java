@@ -23,8 +23,14 @@ public class PersonCenterController {
     @Autowired
     PaperServer paperServer;
 
-    @Value("${spring.papers.path}")
-    String paperPath;
+    @Value("${spring.paper.vm.path}")
+    String paper_vm_path;
+
+    @Value("${spring.paper.ab.path}")
+    String paper_ab_path;
+
+    @Value("${spring.paper.path}")
+    String paper_path;
     String nowuser;
     @Autowired
     private UserInfoServer userInfoServer;
@@ -52,22 +58,29 @@ public class PersonCenterController {
     }
     @PostMapping("/upload/paper")
     public void upload_paper(Model model, Paper paper, MultipartFile file){
-        System.out.println(paperPath);
-        System.out.println(paper);
         paper.setDate(new Date());
         paper.setUsername(nowuser);
-        paper.setPath("/papers/"+nowuser+"/"+file.getOriginalFilename());
+        paper.setPath(paper_vm_path+nowuser+"/"+file.getOriginalFilename());
         System.out.println(paper);
         savePaper(file);
         paperServer.save(paper);
         //return new ModelAndView("papers","paper",model);
     }
     private void savePaper(MultipartFile file){
-        File f = new File(paperPath+nowuser+"/");
+        File f = new File(paper_path+nowuser+"/");
         if(!f.exists()){
-            f.mkdir();
+            f.mkdirs();
         }
-        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(paperPath + nowuser+"/" + file.getOriginalFilename())))) {
+
+        File realFile = new File(f,file.getOriginalFilename());
+        try{
+        if(!realFile.exists()){
+            realFile.createNewFile();
+        }}catch(IOException e){
+            e.printStackTrace();
+        }
+
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(realFile))) {
             bos.write(file.getBytes());
             bos.flush();
         }catch(FileNotFoundException e){
@@ -75,6 +88,9 @@ public class PersonCenterController {
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
+
+
+
     }
     public int get_Age(Date birthDate){
         Date d = new Date();

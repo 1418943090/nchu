@@ -12,20 +12,65 @@
     <script type="text/javascript" src="/js/bootstrapValidate.js"></script>
     <script  src="/js/admins/login_check.js"></script>
     <style>
+
         .container{
-            padding-left: 300px;
-            padding-right: 300px;
+            padding-left: 12%;
+            padding-right: 12%;
+            padding-top: 5%;
         }
 
+        html,body{
+            height:100%;
+            margin:0px;
+        }
 
         .bg {
-            background:url(/img/login2.jpg)   fixed;
-            background-size:100%;
+            background:url(/img/login2.jpg) fixed;
+            height:100%;
+            border: 1px solid #00457b;
+            padding: 8px;
+            font-size: .85em;
         }
-
+        .title{
+            color: white;
+            font-size: 1.3em;
+        }
     </style>
 </head>
 <body>
+<nav class="navbar  navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a> <h5 class="title"><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a  th:href="@{/index}"  th:method="POST" th:type="post"><h5 class="title"><strong>Home</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>News</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Pages</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>People</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Products</strong></h5></a>
+                </li>
+                <li>
+                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Projects</strong></h5></a>
+                </li>
+            </ul>
+        </div>
+</div>
+</nav>
 <div class="row bg">
     <br> <br> <br> <br>
     <div class="container  ">
@@ -61,14 +106,13 @@
                 <div>
                     <label for="" class="col-sm-7 control-label"></label>
                     <div class="col-md-5">
-                        <a th:href="@{/forgetPassword}">忘记密码?</a>
+                        <a th:href="@{/forgetPassword}">忘记密码?</a><br><a th:href="@{/registry}">没有账号?立即注册</a>
                     </div>
                 </div>
                 <br><br><br>
             </form>
         </div>
     </div>
-    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
 </div>
 </body>
 </html>

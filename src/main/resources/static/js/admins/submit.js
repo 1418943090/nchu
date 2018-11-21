@@ -18,8 +18,6 @@ function  uploadSubmit(){
         });
     },1000);
 }
-
-
 function  updateSubmit(){
     document.getElementById("closeupdatemodal").click();
     setTimeout(function(){
@@ -35,7 +33,7 @@ function  updateSubmit(){
                 $("#rightContainer").html(data);
             },
             error: function() {
-                alert("一不小心就出错了^_^,请刷新试试嘻嘻,还不行的话,及时联系管理员哦");
+                window.location.href="/error";
             }
         });
     },1000);

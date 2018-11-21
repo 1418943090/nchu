@@ -26,13 +26,6 @@ public class Main {
                 model.addAttribute("username",cookie2.getValue());
             }
         }}
-//        System.out.println(session.getAttribute("username"));
-//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//        System.out.println(username);
-//        if(username!=null){
-//            System.out.println("a");
-//            model.addAttribute("username",username);
-//        }
         return new ModelAndView("index","login-success",model);
     }
 

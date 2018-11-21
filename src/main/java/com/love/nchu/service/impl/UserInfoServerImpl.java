@@ -32,4 +32,19 @@ public class UserInfoServerImpl implements UserInfoServer {
     public void save(UserInfo userinfo) {
          userinfoRepository.save(userinfo);
     }
+
+    @Override
+    public String isUserExistByUsername(String username) {
+        return userinfoRepository.isExistUserByUsername(username);
+    }
+
+    @Override
+    public String isUserExistByTel(String tel) {
+        return userinfoRepository.isExistUserByTel(tel);
+    }
+
+    @Override
+    public String isUserExistByEmail(String email) {
+        return userinfoRepository.isExistUserByEmail(email);
+    }
 }

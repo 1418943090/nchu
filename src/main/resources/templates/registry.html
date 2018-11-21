@@ -42,19 +42,59 @@
                 });
         });
     </script>
-
     <style>
+        html,body{
+            height:100%;
+            margin:0px;
+        }
         .container{
-            padding-left: 200px;
-            padding-right: 200px;
+            padding-left: 12%;
+            padding-right: 12%;
         }
         .bg {
             background:url(/img/login2.jpg)   fixed;
             background-size:100%;
         }
+        .title{
+            color: white;
+            font-size: 1.3em;
+        }
     </style>
 </head>
 <body>
+<nav class="navbar  navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a> <h5 class="title"><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a  th:href="@{/index}"  th:method="POST" th:type="post"><h5 class="title"><strong>Home</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>News</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Pages</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>People</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Products</strong></h5></a>
+                </li>
+                <li>
+                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Projects</strong></h5></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="row bg">
     <div class="container  ">
         <div class="projects-header page-header text-center">

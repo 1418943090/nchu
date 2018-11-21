@@ -14,7 +14,7 @@ import com.love.nchu.security.SHAencrypt;
 
 import static com.love.nchu.security.SHAencrypt.*;
 
-@Controller
+@RestController
 public class loginController {
 
     @Autowired

@@ -1,10 +1,37 @@
+
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>404</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+
+        html,body{
+            height:100%;
+            margin:0px;
+        }
+        .bg{
+            background:url("/img/error.jpg") fixed;
+            background-size:100%;
+            height:100%;
+            border: 1px solid #00457b;
+            padding: 8px;
+            font-size: .85em;
+        }
+    </style>
 </head>
 <body>
-  你所访问的页面不存在
+<div class="row bg">
+    <div class="container">
+        <br><br>
+        <h1 class="text-center" style="color: white">>_<||| 你访问的页面走丢了</h1>
+    </div>
+</div>
 </body>
 </html>

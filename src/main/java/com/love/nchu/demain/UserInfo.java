@@ -6,12 +6,14 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@Table(name="user_info")
 public class UserInfo  implements Serializable {
     @Id
     private String username;
@@ -58,7 +60,6 @@ public class UserInfo  implements Serializable {
     @Length(max=20,message = "密码长度超过20个字符")
     @Pattern(regexp = "^.*(?=.{6,})(?=.*\\d)(?=.*[A-Z])(?=.*[a-z]).*$",
              message="密码安全强度不够")
-    @Transient
     public String getFirstpassword() {
         return firstpassword;
     }
@@ -69,7 +70,6 @@ public class UserInfo  implements Serializable {
     @Length(max=20,message = "密码长度超过20个字符")
     @Pattern(regexp = "^.*(?=.{6,})(?=.*\\d)(?=.*[A-Z])(?=.*[a-z]).*$",
             message="密码安全强度不够")
-    @Transient
     public String getSecondpassword() {
         return secondpassword;
     }

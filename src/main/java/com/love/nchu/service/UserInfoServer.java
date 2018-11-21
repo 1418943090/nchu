@@ -6,4 +6,8 @@ public interface UserInfoServer  {
      UserInfo getUserByTel(String tel) ;
      UserInfo getUserByEmail(String email) ;
      void save(UserInfo userinfo);
+     String isUserExistByUsername(String username);
+     String isUserExistByTel(String tel);
+     String isUserExistByEmail(String email);
+
 }

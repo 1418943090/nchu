@@ -3,11 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Chrome">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .title{
+            font-size: 1.5em;
+        }
+        .container{
+            padding-top: 1%;
+        }
+    </style>
 </head>
 <body>
 <div class="navbar  navbar-fixed-top">
@@ -15,29 +24,29 @@
         <div class="navbar-header">
             <ul class="nav navbar-nav navbar-left">
                 <li>
-                    <a> <h5><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
+                    <a> <h5 class="title"><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
                 </li>
             </ul>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a th:href="@{/index}"  th:method="POST" th:type="post"><h5><strong>Home</strong></h5></a>
+                    <a  th:href="@{/index}"  th:method="POST" th:type="post"><h5 class="title"><strong>Home</strong></h5></a>
                 </li>
                 <li>
-                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5><strong>News</strong></h5></a>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>News</strong></h5></a>
                 </li>
                 <li>
-                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5><strong>Pages</strong></h5></a>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Pages</strong></h5></a>
                 </li>
                 <li>
-                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5><strong>People</strong></h5></a>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>People</strong></h5></a>
                 </li>
                 <li>
-                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5><strong>Products</strong></h5></a>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Products</strong></h5></a>
                 </li>
                 <li>
-                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5><strong>Projects</strong></h5></a>
+                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Projects</strong></h5></a>
                 </li>
             </ul>
         </div>

@@ -6,8 +6,8 @@ import com.love.nchu.service.UserInfoServer;
 import com.love.nchu.service.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
@@ -28,8 +28,14 @@ public class RegistryController {
     @Autowired
     UserServer userServer;
 
-    static String imgPath = "src/main/resources/static/img/people/";
+    @Value("${spring.img.vm.path}")
+    String img_vm_path;
 
+    @Value("${spring.img.ab.path}")
+    String img_ab_path;
+
+    @Value("${spring.img.path}")
+    String img_path;
     @RequestMapping(value="/registry",method = {RequestMethod.GET,RequestMethod.POST})
     public ModelAndView registry(){
         return new ModelAndView("registry");
@@ -52,7 +58,8 @@ public class RegistryController {
         field_init(model,userInfo);
        if(!iserror(errors,model,file,userInfo)){//校验输入是否正确
            if(Save_Image(file,userInfo)){//存储图像到目录中，把路径存到数据库中
-              // System.out.print(userInfo.toString());
+               System.out.println("aaaa");
+               System.out.print(userInfo.toString());
                userInfoServer.save(userInfo);//存储用户详细信息
                userServer.save(new User( userInfo.getUsername(),SHAencrypt.encryptSHA(userInfo.getFirstpassword()),userInfo.getIdentity(),true,true,true,true));
              //  PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -92,7 +99,7 @@ public class RegistryController {
            model.addAttribute("identity_status","");
            model.addAttribute("research_direct_value",userInfo.getResearch_direct());
            model.addAttribute("research_direct_status","");
-           model.addAttribute("picture_status","");
+           model.addAttribute("file_status","");
            model.addAttribute("self_introduction_value",userInfo.getSelf_introduction());
            model.addAttribute("self_introduction__status","");
        }
@@ -105,8 +112,15 @@ public class RegistryController {
                    model.addAttribute(fieldError.getField()+"_status",fieldError.getDefaultMessage());
                });
            }
-           if(file.isEmpty()){
+          else if(file.isEmpty()){
                model.addAttribute("file_status","请选择你的个人头像");
+               iserror = true;
+           }else if(!((file.getOriginalFilename().substring(file.getOriginalFilename().length()-4).equals(".jpg")) || (file.getOriginalFilename().substring(file.getOriginalFilename().length()-4).equals(".png")) )){
+              System.out.println(file.getOriginalFilename().substring(file.getOriginalFilename().length()-4).equals(".jpg"));
+               System.out.println(file.getOriginalFilename().substring(file.getOriginalFilename().length()-4).equals(".png"));
+              System.out.println(!((file.getOriginalFilename().substring(file.getOriginalFilename().length()-4)==".jpg") || (file.getOriginalFilename().substring(file.getOriginalFilename().length()-4)==".png") ));
+
+               model.addAttribute("file_status","只能上传.jpg/.png格式头像");
                iserror = true;
            }
            else if(!model.containsAttribute("firstpassword_status") && !model.containsAttribute("secondpassword_status")){
@@ -116,13 +130,13 @@ public class RegistryController {
                     iserror = true;
                }
            }
-           if(userInfoServer.getUserByUsername(userInfo.getUsername())!=null){
+          else if(userInfoServer.isUserExistByUsername(userInfo.getUsername())!=null){
                model.addAttribute("username_status","该用户名已被注册了");
                 iserror = true;
-           }else if(userInfoServer.getUserByEmail(userInfo.getEmail())!=null){
+           }else if(userInfoServer.isUserExistByEmail(userInfo.getEmail())!=null){
                model.addAttribute("email_status","该邮箱被注册了");
                 iserror = true;
-           }else if(userInfoServer.getUserByTel(userInfo.getTel())!=null){
+           }else if(userInfoServer.isUserExistByTel(userInfo.getTel())!=null){
                model.addAttribute("tel_status","该号码已被注册了");
                 iserror = true;
            }
@@ -130,15 +144,30 @@ public class RegistryController {
        }
        public boolean Save_Image(MultipartFile file,UserInfo userInfo){
          System.out.println(userInfo.toString());
+         File newfile = new File(img_path);
+         if(!newfile.exists()){
+             System.out.println("AAA");
+             newfile.mkdirs();
+         }
+         File bfile = new File(newfile,userInfo.getUsername()+".jpg");
+         if(!bfile.exists()){
+             try{
+             bfile.createNewFile();
+                 System.out.println("BBB");
+             }catch(IOException e){
+                 e.printStackTrace();
+             }
+         }
            try {
                BufferedOutputStream out = new BufferedOutputStream(
-                       new FileOutputStream(new File(imgPath + userInfo.getUsername()+".jpg")));//保存图片到目录下
+                       new FileOutputStream(bfile));//保存图片到目录下
                out.write(file.getBytes());
                out.flush();
                out.close();
-               String filename = "/img/people/" + userInfo.getUsername() + ".jpg";
+               String filename = img_vm_path + userInfo.getUsername() + ".jpg";
               userInfo.setPicture(filename);
            } catch (FileNotFoundException e) {
+               System.out.println("aaaaa");
                e.printStackTrace();
               return false;
            } catch (IOException e) {
