@@ -23,7 +23,7 @@ function deletePaper(){
           url: '/delete/paper',
           contentType: 'application/json;charset=utf-8',
           type: 'post',
-          async:false,
+          async:true,
           data: JSON.stringify(data),
           //dataType:"text",
           success: function (data) {

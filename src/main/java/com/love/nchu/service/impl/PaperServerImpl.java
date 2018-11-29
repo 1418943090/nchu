@@ -16,7 +16,6 @@ public class PaperServerImpl implements PaperServer {
     PaperRepository paperRepository;
 
     @Override
-
     public void deletePaper(Integer id) {
         paperRepository.deletePaperById(id);
     }
@@ -27,12 +26,35 @@ public class PaperServerImpl implements PaperServer {
     }
 
     @Override
+    public List<Paper> getAllPapers() {
+        return paperRepository.getAllByIdIsNotNull();
+    }
+    @Override
     public void save(Paper paper) {
         paperRepository.save(paper);
     }
 
+
     @Override
     public List<Paper> findPaperByUsername(String username) {
         return paperRepository.findPaperByUsername(username);
+    }
+
+    @Override
+    public List<Paper> getPaperByNameLikeOrTitleLike(String value) {
+        System.out.println(value);
+        return paperRepository.findPaperByNameLikeOrTitleLike(value);
+    }
+
+    @Override
+    public List<Paper> getPaperByNameLike(String name) {
+        System.out.println(name);
+        return paperRepository.findPaperByNameLike(name);
+    }
+
+    @Override
+    public List<Paper> getPaperByTitleLike(String title) {
+        System.out.println(title);
+        return paperRepository.findPaperByTitleLike(title);
     }
 }

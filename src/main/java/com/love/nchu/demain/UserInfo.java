@@ -3,12 +3,11 @@ package com.love.nchu.demain;
 
 import org.hibernate.validator.constraints.Length;
 
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.*;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -30,13 +29,15 @@ public class UserInfo  implements Serializable {
     private String birthplace;
     private String school;
     private String identity;
+    private String teachername;
     private String research_direct;
     private String picture;
+    @Column(length = 400)
     private String self_introduction;
     protected UserInfo(){
 
     }
-    public UserInfo(String username, String email, String name, String sex, String tel, String birthplace, String school, String identity, String research_direct, String picture, String self_introduction) {
+    public UserInfo(String username, String email, String name, String sex, String tel, String birthplace, String school, String identity,String teachername, String research_direct, String picture, String self_introduction) {
         this.username = username;
         this.email = email;
         this.name = name;
@@ -47,6 +48,7 @@ public class UserInfo  implements Serializable {
         this.identity = identity;
         this.research_direct = research_direct;
         this.picture = picture;
+        this.teachername = teachername;
         this.self_introduction = self_introduction;
     }
     @NotBlank(message="请输入用户名")
@@ -158,6 +160,17 @@ public class UserInfo  implements Serializable {
         return research_direct;
     }
 
+
+    @NotBlank(message = "请输入指导老师名字")
+    @Length(max=20,message = "不要调皮哦")
+    public String getTeachername() {
+        return teachername;
+    }
+
+    public void setTeachername(String teachername) {
+        this.teachername = teachername;
+    }
+
     public void setResearch_direct(String research_direct) {
         this.research_direct = research_direct;
     }
@@ -171,7 +184,7 @@ public class UserInfo  implements Serializable {
     }
 
     @NotBlank(message = "请输入自我简介")
-    @Length(max=120,message = "简介字数超过限制了")
+    @Length(max=400,message = "简介字数超过限制了")
     public String getSelf_introduction() {
         return self_introduction;
     }
@@ -186,6 +199,7 @@ public class UserInfo  implements Serializable {
                 "username='" + username + '\'' +
                 ", firstpassword='" + firstpassword + '\'' +
                 ", secondpassword='" + secondpassword + '\'' +
+                ", age=" + age +
                 ", birthDate=" + birthDate +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
@@ -194,6 +208,7 @@ public class UserInfo  implements Serializable {
                 ", birthplace='" + birthplace + '\'' +
                 ", school='" + school + '\'' +
                 ", identity='" + identity + '\'' +
+                ", teachername='" + teachername + '\'' +
                 ", research_direct='" + research_direct + '\'' +
                 ", picture='" + picture + '\'' +
                 ", self_introduction='" + self_introduction + '\'' +

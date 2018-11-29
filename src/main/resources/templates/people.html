@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .container{
+
+            padding-top: 5%;
+            padding-left: 5%;
+
+        }
+
+        html,body{
+            height:100%;
+            margin:0px;
+        }
+
+        body {
+            background:url(/img/login2.jpg) fixed;
+
+        }
+        .bg{
+
+            font-size: .85em;
+        }
+        .title{
+            color: white;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .page-header{
+            color: #d58512;
+        }
+        .navbar-header{
+            padding-top: 1em;
+        }
+       .date-name{
+           font-size: 3em;
+           color: #c7254e;
+       }
+        .date-selfIntroduction {
+            font-size: 1.5em;
+        }
+        .date-more{
+            font-size: 1.5em;
+        }
+        .search{
+            position: absolute;
+            right:1%;
+            top: 7%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar  navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <h5 class="title" th:text="${TitleEdit.getTitle1()}"></h5>
+                </li>
+            </ul>
+
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a  th:href="@{/index}"  th:method="POST" th:type="post"><h5 class="title"><strong>Home</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>News</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/papers}"  th:method="POST" th:type="post"><h5 class="title"><strong>Papers</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/people}"  th:method="POST" th:type="post"><h5 class="title"><strong>People</strong></h5></a>
+                </li>
+                <li>
+                    <a  th:href="@{/products}"  th:method="POST" th:type="post"><h5 class="title"><strong>Products</strong></h5></a>
+                </li>
+                <li>
+                    <a th:href="@{/projects}"  th:method="POST" th:type="post"><h5 class="title"><strong>Projects</strong></h5></a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="row bg">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="projects-header page-header text-left">
+                    <h2>Facult</h2>
+                </div>
+        <div th:each="teacher : ${model.teacher}">
+        <div class="well">
+
+            <div class="row">
+                <div class="col-sm-3 col-md-offset-0.5">
+                 <img th:src="${teacher.picture}" width="150px" height="250px">
+                </div>
+                <div class="col-sm-9">
+                 <h4 th:text="${teacher.name}" class="date-name"></h4>
+                 <p th:text="${teacher.self_introduction}" class="date-selfIntroduction"></p>
+                    <a class="date-more">查看更多</a>
+                </div>
+            </div>
+
+        </div>
+         </div>
+            </div>
+         </div>
+        <div class="search" style="position:fixed;">
+            <form class="navbar-form navbar-left" onsubmit="return false">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search" id="input_search">
+                </div>
+                <button  class="btn btn-default" onclick="search();">
+                    <span class="glyphicon glyphicon-search"></span>搜索</button>
+            </form>
+        </div>
+
+    <!--************************************************************************************-->
+        <div class="row">
+            <div class="col-md-10">
+                <div class="projects-header page-header text-left">
+                    <h2>Student</h2>
+                </div>
+                 <div th:each="student : ${model.student}">
+                    <div class="well">
+                       <div class="row">
+                         <div class="col-sm-3">
+                            <img th:src="${student.picture}" width="150px" height="250px">
+                         </div>
+                        <div class="col-sm-8">
+                         <h4 th:text="${student.name}" class="date-name"></h4>
+                           <p th:text="${student.self_introduction}" class="date-selfIntroduction"></p>
+                            <a class="date-more">查看更多</a>
+                        </div>
+
+                       </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--*********************************************************************************************************************-->
+<!--<div class="container">-->
+    <!--<div class="projects-header page-header text-left">-->
+        <!--<h2>Postdoctoral Fellows</h2>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+        <!--<div class="col-sm-3">-->
+            <!--<img src="https://waylau.com/images/waylau_181_181.jpg" width="150px" height="250px">-->
+        <!--</div>-->
+        <!--<dic class="col-sm-4">-->
+
+            <!--<h4><strong>杨志勇</strong></h4>-->
+            <!--&lt;!&ndash;<div class="col-md-2"><span class="glyphicon glyphicon-map-marker" aria-hidden="true">城市:北京  </span></div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-2"><span class="glyphicon glyphicon-earphone" aria-hidden="true">联系电话:33543534544</span></div>&ndash;&gt;-->
+            <!--<p>家居交接给 够我金安国纪高管加奇偶埃及哦 偶爱就够你积极哦啊个解耦我按结构我软件奇偶家机构入门</p>-->
+        <!--</dic>-->
+    <!--</div>-->
+    <!--<div class="projects-header page-header">-->
+
+    <!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--*********************************************************-->
+</body>
+</html>

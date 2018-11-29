@@ -1,6 +1,6 @@
 
-//# sourceURL=main.js
-// DOM 加载完再执行
+
+
 $(function() {
     // 菜单事件
     $(".blog-menu .list-group-item").on('click',function() {
@@ -11,7 +11,7 @@ $(function() {
         // 加载其他模块的页面到右侧工作区
         $.ajax({
             url: url,
-            async:false,
+            async:true,
             success: function(data){
                 $("#rightContainer").html(data);
             },

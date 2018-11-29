@@ -48,9 +48,7 @@ $(function(){
              alert("你还没有选择要编辑的论文哦");
          }
          else if(num>1){
-             alert(num);
              alert("一次只能编辑一个哦");
-
          }
          else{
              updateFormvalidator_Init();
@@ -60,7 +58,6 @@ $(function(){
              $('#updateModal').modal('show');
          }
      });
-
     //
     // $('.card').on('click','.btn-upd',function(){
     //

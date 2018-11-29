@@ -1,9 +1,14 @@
 package com.love.nchu.controller;
+
+import com.love.nchu.demain.GlobalVariable;
+import com.love.nchu.demain.ReviewTable;
 import com.love.nchu.demain.User;
 import com.love.nchu.demain.UserInfo;
 import com.love.nchu.security.SHAencrypt;
+import com.love.nchu.service.ReviewTableServer;
 import com.love.nchu.service.UserInfoServer;
 import com.love.nchu.service.UserServer;
+import com.love.nchu.vo.MyDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.validation.Valid;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -25,6 +31,8 @@ public class RegistryController {
     UserInfoServer userInfoServer;
     @Autowired
     UserServer userServer;
+    @Autowired
+    ReviewTableServer reviewTableServer;
     @Value("${spring.img.vm.path}")
     String img_vm_path;
     @Value("${spring.img.ab.path}")
@@ -32,8 +40,10 @@ public class RegistryController {
     @Value("${spring.img.path}")
     String img_path;
     @RequestMapping(value="/registry",method = {RequestMethod.GET,RequestMethod.POST})
-    public ModelAndView registry(){
-        return new ModelAndView("registry");
+    public ModelAndView registry(Model model)
+    {
+        model.addAttribute("TitleEdit", GlobalVariable.titleEdit);
+        return new ModelAndView("registry","model",model);
     }
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder){
@@ -41,17 +51,26 @@ public class RegistryController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
     @RequestMapping(value="/registry_action",method = {RequestMethod.GET,RequestMethod.POST})
-    public ModelAndView registry_action(@Valid  UserInfo userInfo,
-                                        BindingResult errors, Model model,
-                                        @RequestParam(name="file",required = false) MultipartFile file
-                                       // @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+    public ModelAndView registry_action(
+            @Valid  UserInfo userInfo,
+            BindingResult errors, Model model,
+            @RequestParam(name="file",required = false) MultipartFile file
+            // @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
     )throws Exception{
         field_init(model,userInfo);
+        model.addAttribute("TitleEdit",GlobalVariable.titleEdit);
        if(!iserror(errors,model,file,userInfo)){//校验输入是否正确
            if(Save_Image(file,userInfo)){//存储图像到目录中，把路径存到数据库中
+               userInfo.setAge(get_Age(userInfo.getBirthDate()));
+               if(userInfo.getSex().equals("man")){
+                   userInfo.setSex("男");
+               }
+               else userInfo.setSex("女");
+               //userInfo.setRegisitory_date(MyDate.getDate());
                userInfoServer.save(userInfo);//存储用户详细信息
-               userServer.save(new User( userInfo.getUsername(),SHAencrypt.encryptSHA(userInfo.getFirstpassword()),userInfo.getIdentity(),true,true,true,true));
-               return new ModelAndView("registry_success");
+               userServer.save(new User( userInfo.getUsername(), SHAencrypt.encryptSHA(userInfo.getFirstpassword()),userInfo.getIdentity(),false,false,false,false));
+               reviewTableServer.save(new ReviewTable(userInfo.getUsername(),new Date(),"未处理","未处理","warning"));
+               return new ModelAndView("registry_success","mode1",model);
            }
        }
         return new ModelAndView("registry","registry",model);
@@ -81,6 +100,8 @@ public class RegistryController {
            model.addAttribute("school_status","");
            model.addAttribute("identity_value",userInfo.getIdentity());
            model.addAttribute("identity_status","");
+           model.addAttribute("teachername_value",userInfo.getTeachername());
+           model.addAttribute("teachername_status","");
            model.addAttribute("research_direct_value",userInfo.getResearch_direct());
            model.addAttribute("research_direct_status","");
            model.addAttribute("file_status","");
@@ -93,7 +114,12 @@ public class RegistryController {
                iserror =true;
                errors.getAllErrors().stream().forEach(error->{
                    FieldError fieldError = (FieldError)error;
-                   model.addAttribute(fieldError.getField()+"_status",fieldError.getDefaultMessage());
+                   if(fieldError.getField().equals("teachername")&& userInfo.getIdentity().equals("teacher")) {
+                       model.addAttribute(fieldError.getField()+"_status","");
+                   }
+                   else{
+                       model.addAttribute(fieldError.getField()+"_status",fieldError.getDefaultMessage());
+                   }
                });
            }
           else if(file.isEmpty()){
@@ -112,6 +138,9 @@ public class RegistryController {
            }else if(userInfoServer.isUserExistByTel(userInfo.getTel())!=null){
                model.addAttribute("tel_status","该号码已被注册了");
                 iserror = true;
+           }else if(userInfo.getTeachername().equals("null")&&(userInfo.getIdentity().equals("student"))){
+               model.addAttribute("teachername_status","请输入指导老师名字");
+               iserror = true;
            }  else if(!model.containsAttribute("firstpassword_status") && !model.containsAttribute("secondpassword_status")){
                if(!userInfo.getFirstpassword().equals(userInfo.getSecondpassword())){
                    model.addAttribute("firstpassword_status","两次密码不一致");
@@ -122,7 +151,6 @@ public class RegistryController {
            return iserror;
        }
        public boolean Save_Image(MultipartFile file,UserInfo userInfo){
-         System.out.println(userInfo.toString());
          File newfile = new File(img_path);
          if(!newfile.exists()){
              newfile.mkdirs();
@@ -152,4 +180,12 @@ public class RegistryController {
            }
         return true;
        }
+    public int get_Age(Date birthDate){
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String s = sdf.format(birthDate);
+        int birthYear =Integer.parseInt(s.substring(0,4));
+        int nowYear = Integer.parseInt(MyDate.getDate().substring(0,4));
+        return nowYear-birthYear;
+    }
 }

@@ -6,11 +6,14 @@ import com.love.nchu.service.UserInfoServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 @RestController
@@ -33,23 +36,26 @@ public class PersonCenterController {
             userInfo.setSex("男");
         }
         else userInfo.setSex("女");
-        userInfo.setAge(get_Age(userInfo.getBirthDate()));
+        System.out.println("aadsgas");
         model.addAttribute("user_info",userInfo);
         return new ModelAndView("basic_information","basic_information",model);
     }
-    @GetMapping("/papers/{username}")
+    @GetMapping("/userPapers/{username}")
     public ModelAndView paper(@PathVariable String username, Model model)
     {
         nowuser = username;
         List<Paper> list = paperServer.findPaperByUsername(username);
+        System.out.println(list);
         model.addAttribute("list",list);
-        return new ModelAndView("papers","model",model);
+        System.out.println("aaa");
+        return new ModelAndView("userPapers","model",model);
     }
     @PostMapping("/upload/paper")
     public void upload_paper(Model model, Paper paper, MultipartFile file){
         paper.setDate(new Date());
         paper.setUsername(nowuser);
         paper.setPath(paper_vm_path+nowuser+"/"+file.getOriginalFilename());
+        paper.setName(userInfoServer.getNameByUsername(paper.getUsername()));
         savePaper(file);
         paperServer.save(paper);
     }
@@ -75,11 +81,5 @@ public class PersonCenterController {
             System.out.println(e.getMessage());
         }
     }
-    public int get_Age(Date birthDate){
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        int birthYear =Integer.parseInt(birthDate.toString().substring(0,4));
-        int nowYear = Integer.parseInt((sdf.format(d)).toString().substring(0,4));
-        return nowYear-birthYear;
-    }
+
 }

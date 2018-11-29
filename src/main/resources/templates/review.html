@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script th:inline="javascript" src="/js/admins/review.js"></script>
+    <script th:inline="javascript">
+
+        $(".btn-pass").click(function(){
+
+            var list = [[${model.list}]];
+            fa(list,"pass");
+        });
+
+        $(".btn-refuse").click(function(){
+
+            var list = [[${model.list}]];
+            fa(list,"refuse");
+        });
+        $(".btn-del").click(function(){
+
+            var list = [[${model.list}]];
+            del(list);
+        });
+
+
+        $('.more').click(function(){
+
+            var username = $(this).attr("id");
+
+            var list2 = [[${model.list2}]];
+            var date;
+            for(n in list2){
+
+                if(list2[n].username == username){
+                    date = list2[n];
+                    break;
+                }
+            }
+         document.getElementById("img").src = date.picture;
+
+            $("#name").text(date.name);
+            $("#sex").text(date.sex);
+            $("#birthplace").text(date.birthplace);
+
+            $("#age").text((date.age).toString());
+            $("#school").text(date.school);
+            $("#tel").text(date.tel);
+            $("#email").text(date.email);
+            $("#research_direct").text(date.research_direct);
+            $("#identity").text(date.identity);
+            $("#self_introduction").text(date.self_introduction);
+
+         $("#moreModal").modal("show");
+
+        });
+    </script>
+    <style>
+        .more{
+            background-color: white;
+        }
+        .a{
+            font-size: 1.6em;
+        }
+        .b{
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <br>
+            <p><!--data-toggle="modal" data-target="#myModal"-->
+                <button class="btn btn-primary btn-pass"  type="button">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;通过</button>
+                <button class="btn btn-info btn-refuse" type="button"><i class="fa fa-paste"></i>
+                    <span class="glyphicon glyphicon-remove"></span>拒绝</button>
+                <button class="btn btn-danger btn-del" type="button" onclick="deleteApplication();">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;删除
+                </button>
+            </p>
+            <table class="table table-bordered table-hover">
+                <caption>申请列表</caption>
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class ="review" id="reviewCheckbox"></th>
+                    <th>申请编号</th>
+                    <th>用户名</th>
+                    <th>申请日期</th>
+                    <th>详细信息</th>
+                    <th>状态</th>
+                    <th>处理结果</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr  th:each="ReviewTable : ${model.list}" th:class="${ReviewTable.cla}" th:attr="nnn=${ReviewTable.status}">
+                    <td><input type="checkbox" class="review re" th:attr="id=${ReviewTable.id}"></td>
+                    <td th:text="${ReviewTable.id}"></td>
+                    <td id="user"  th:text="${ReviewTable.username}"></td>
+                    <td th:text="${ReviewTable.date}"></td>
+                    <td><a class="btn default more btn-xs" th:attr="id=${ReviewTable.username}">详细信息</a></td>
+                    <td th:text="${ReviewTable.status}"></td>
+                    <td th:text="${ReviewTable.ending}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade " id="moreModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-center" id="myModalLabel" >
+                        详细信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                           <img src="" id = "img"  width="150px" height="250px">
+                        </div>
+                        <div class="col-md-8">
+                            <h id="name" class="b"></h>
+                            <div>
+                                <span class="glyphicon glyphicon-tree-deciduous a" aria-hidden="true" >性别:<span id="sex"></span></span><br>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-home a" aria-hidden="true" >籍贯:<span id="birthplace"></span></span><br>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-cloud a" aria-hidden="true" >年龄:<span id="age"></span></span><br>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-education a" aria-hidden="true" >所在高校:<span id="school"></span></span><br>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-earphone a" aria-hidden="true" >电话号码:<span id="tel"></span></span><br>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-envelope a" aria-hidden="true" >电子邮箱:<span id="email"></span></span><br>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-search a" aria-hidden="true" >研究方向:<span id="research_direct"></span></span><br>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-user a" aria-hidden="true" >身份:<span id="identity"></span></span><br>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="a"> 简介:<span id="self_introduction"></span></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closemodal">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--*******************************************************************************************************-->
+
+</div>
+
+</body>
+</html>

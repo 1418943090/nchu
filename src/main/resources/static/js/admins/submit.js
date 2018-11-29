@@ -8,7 +8,7 @@ function  uploadSubmit(){
     setTimeout(function(){
         $.ajax({
             url: url,
-            async:false,
+            async:true,
             success: function(data){
                 $("#rightContainer").html(data);
             },
@@ -28,7 +28,7 @@ function  updateSubmit(){
     setTimeout(function(){
         $.ajax({
             url: url,
-            async:false,
+            async:true,
             success: function(data){
                 $("#rightContainer").html(data);
             },

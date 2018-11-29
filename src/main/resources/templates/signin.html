@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="/js/admins/time.js"></script>
+    <script type="text/javascript" src="/js/admins/sign_in.js"></script>
+    <style>
+        .aaa{width:100%; height:50px; line-height:50px; text-align:center;
+
+        }
+    </style>
+    <script th:inline="javascript">
+        function sign_in(){
+           var username =   [[${sign_in_status.username}]];
+            $.ajax({
+                url: "/sign_in/in/"+username,
+                async:true,
+                dataType:"text",
+                success: function(data){
+                    var jsonStr = JSON.parse(data);
+                    if(jsonStr.data==""){
+
+                        alert("签到成功");
+
+                        setTimeout(function(){
+                            $.ajax({
+                                url: "/sign_in/"+username,
+                                async:true,
+                                success: function(data){
+                                    $("#rightContainer").html(data);
+                                },
+                                error: function() {
+                                    window.location.href="/error";
+                                }
+                            });
+                        },1000);
+                    }else
+                    {
+                        alert(jsonStr.data);
+                    }
+
+
+                },
+                error: function() {
+
+                }
+            });
+
+
+        }
+    </script>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <br>
+            <div class="row">
+                <div class="col-md-5">
+                  <p><!--data-toggle="modal" data-target="#myModal"-->
+                  <button class="btn btn-primary btn-add"  type="button" onclick="sign_in();">
+                    <span class="glyphicon glyphicon-hand-down" aria-hidden="true" ></span>&nbsp;签到</button>
+                </p>
+                </div>
+                <div class="col-md-7">
+                    <p id="timeShow" class="aaa" style="font-size: 1.5em;color: #d2322d"></p>
+                </div>
+            </div>
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                <tr>
+                    <th class="text-center">签到<br>时刻表</th>
+                    <th class="text-center">上午•签到<br><p th:text="${sign_in_time.mon_in}"></p></th>
+                    <th class="text-center">上午•签离<br><p th:text="${sign_in_time.mon_out}"></p></th>
+                    <th class="text-center">下午•签到<br><p th:text="${sign_in_time.aft_in}"></p></th>
+                    <th class="text-center">下午•签离<br><p th:text="${sign_in_time.aft_out}"></p></th>
+                    <th class="text-center">晚上•签到<br><p th:text="${sign_in_time.eve_in}"></p></th>
+                    <th class="text-center">晚上•签离<br><p th:text="${sign_in_time.eve_out}"></p></th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center">签到时间</td>
+                    <td ><p class="text-center" th:text="${sign_in_status.getMon_in()}"></p></td>
+                    <td><p class="text-center" th:text="${sign_in_status.getMon_out()}"></p></td>
+                    <td><p class="text-center" th:text="${sign_in_status.getAft_in()}"></p></td>
+                    <td><p class="text-center" th:text="${sign_in_status.getAft_out()}"></p></td>
+                    <td><p class="text-center" th:text="${sign_in_status.getEve_in()}"></p></td>
+                    <td><p class="text-center" th:text="${sign_in_status.getEve_out()}"></p></td>
+                </tr>
+                <tr>
+                    <td class="text-center">状态</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

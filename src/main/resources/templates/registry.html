@@ -2,8 +2,7 @@
 <!--注册页面-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,6 +18,7 @@
     <script type="text/javascript" th:inline="javascript">
       //恢复单选按钮状态
         $(document).ready(function(){
+            document.getElementById("teachername").value="null";
            if([[${sex_value}]]=="woman")
            {
                $("#woman").attr("checked",true);
@@ -29,10 +29,15 @@
            if([[${identity_value}]]=="teacher")
            {
                $("#teacher").attr("checked",true);
+               document.getElementById("teachername").value="null";
+               $("#teachername_div").hide();
+
            }
            if([[${identity_value}]]=="student")
            {
                $("#student").attr("checked",true);
+               $("#teachername_div").show();
+
            }
 
 
@@ -40,6 +45,20 @@
                     format: 'YYYY-MM-DD',
                     locale: moment.locale('zh-cn')
                 });
+
+
+            $('input[name="identity"]').click(function(){
+                if($(this).val()=="teacher"){
+
+                    document.getElementById("teachername").value="null";
+
+                    $("#teachername_div").hide();
+                }
+                if($(this).val()=="student"){
+
+                    $("#teachername_div").show();
+                }
+            });
         });
     </script>
     <style>
@@ -58,6 +77,10 @@
         .title{
             color: white;
             font-size: 1.3em;
+            font-weight: bold;
+        }
+        .flag{
+            padding-top: 1em;
         }
     </style>
 </head>
@@ -67,7 +90,7 @@
         <div class="navbar-header">
             <ul class="nav navbar-nav navbar-left">
                 <li>
-                    <a> <h5 class="title"><strong>&nbsp;&nbsp;&nbsp;南昌航空大学</strong></h5></a>
+                   <h5 class="title flag" th:text="${TitleEdit.getTitle1()}"></h5>
                 </li>
             </ul>
         </div>
@@ -80,16 +103,16 @@
                     <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>News</strong></h5></a>
                 </li>
                 <li>
-                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Pages</strong></h5></a>
+                    <a  th:href="@{/papers}"  th:method="POST" th:type="post"><h5 class="title"><strong>Papers</strong></h5></a>
                 </li>
                 <li>
-                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>People</strong></h5></a>
+                    <a  th:href="@{/people}"  th:method="POST" th:type="post"><h5 class="title"><strong>People</strong></h5></a>
                 </li>
                 <li>
-                    <a  th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Products</strong></h5></a>
+                    <a  th:href="@{/products}"  th:method="POST" th:type="post"><h5 class="title"><strong>Products</strong></h5></a>
                 </li>
                 <li>
-                    <a th:href="@{/login}"  th:method="POST" th:type="post"><h5 class="title"><strong>Projects</strong></h5></a>
+                    <a th:href="@{/projects}"  th:method="POST" th:type="post"><h5 class="title"><strong>Projects</strong></h5></a>
                 </li>
             </ul>
         </div>
@@ -205,6 +228,14 @@
                     </div>
                 </div>
                 <!--******************************************************************************************************************-->
+                <div class="form-group " style="display: none"  id="teachername_div">
+                    <label for="" class="col-sm-4 control-label"><span style="color:red">*</span>指导老师:</label>
+                    <div class="col-sm-5">
+                        <input  size="16" class="form-control" id="teachername" name="teachername" th:value="${teachername_value}" placeholder="请输入老师名字"/>
+                    </div>
+                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${teachername_status}"></label>
+                </div>
+                <!--******************************************************************************************************************-->
                 <div class="form-group">
                     <label for="" class="col-sm-4 control-label"><span style="color:red">*</span>研究方向:</label>
                     <div class="col-sm-5">
@@ -224,7 +255,7 @@
                 <div class="form-group">
                     <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>个人简介:</label>
                     <div class="col-sm-5">
-                        <textarea class="form-control" rows="5" id="details" name="self_introduction" th:text="${self_introduction_value}" placeholder="自我描述(身份,目前所在高校，研究方向，座右铭等)100字左右"></textarea>
+                        <textarea class="form-control" rows="5" id="details" name="self_introduction" th:text="${self_introduction_value}" placeholder="自我描述(身份,目前所在高校，研究方向，座右铭等)200字左右"></textarea>
                     </div>
                     <label for="" class="col-sm-0 control-label" style="color: red" th:text="${self_introduction_status}"></label>
                 </div>

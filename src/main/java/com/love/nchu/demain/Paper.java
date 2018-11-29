@@ -12,18 +12,23 @@ public class Paper implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 自增长策略
     private int id;
     private String title;
+    @Column(name = "summary",length = 500)
+    private String summary;
     private String path;
     private String username;
+    private String name;
     private Date  date;
 
     protected Paper(){
 
     }
 
-    public Paper(String title, String path, String username, Date date) {
+    public Paper(String title, String summary, String path, String username, String name, Date date) {
         this.title = title;
+        this.summary = summary;
         this.path = path;
         this.username = username;
+        this.name = name;
         this.date = date;
     }
 
@@ -31,6 +36,9 @@ public class Paper implements Serializable {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -38,6 +46,14 @@ public class Paper implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getPath() {
@@ -56,6 +72,14 @@ public class Paper implements Serializable {
         this.username = username;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -67,10 +91,12 @@ public class Paper implements Serializable {
     @Override
     public String toString() {
         return "Paper{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", title='" + title + '\'' +
+                ", summary='" + summary + '\'' +
                 ", path='" + path + '\'' +
                 ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", date=" + date +
                 '}';
     }

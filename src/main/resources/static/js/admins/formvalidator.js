@@ -20,6 +20,18 @@ $(function(){
                         }
                     }
                 },
+                summary: {
+                    validators: {
+                        notEmpty: {
+                            message: '你还没有输入摘要哦'
+                        },
+                        stringLength: {
+                            min: 50,
+                            max: 300,
+                            message: '摘要不要太短也不要太长哦'
+                        }
+                    }
+                },
                 file: {
                     validators: {
                         notEmpty: {
