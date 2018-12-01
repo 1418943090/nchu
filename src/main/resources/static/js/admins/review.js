@@ -32,9 +32,9 @@ function del(list){
         }
     }
     if(review_id.length==0){
-        alert("你还没有选择要处理的请求");
+        toastr.warning("你还没有选择要处理的请求");
     }else{
-        alert("温馨提示:删除操作只是删除记录,并不会对之前的处理结果产生影响.");
+        toastr.warning("温馨提示:删除操作只是删除记录,并不会对之前的处理结果产生影响.");
         submitDeal(review_id,"/review/del");
     }
 
@@ -53,10 +53,10 @@ function fa(list,type){
         }
     }
     if (num == 0) {
-        alert("你还没有选择要处理的申请哦");
+        toastr.warning("你还没有选择要处理的申请哦");
     }
     else if (num > 1) {
-        alert("一次只能处理一个申请哦");
+        toastr.warning("一次只能处理一个申请哦");
     }else{
     var n = 0;
     var date;
@@ -67,7 +67,7 @@ function fa(list,type){
         }
      }
    if(date.status=="已处理"){
-       alert("该请求已被处理，无法重复处理");
+       toastr.warning("该请求已被处理，无法重复处理");
    }
    else{
        var url;
@@ -93,7 +93,7 @@ function submitDeal(data,url){
             $("#rightContainer").html(data);
         },
         error: function() {
-           alert("操作失败");
+            toastr.error("操作失败");
         }
     });
 

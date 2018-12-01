@@ -60,6 +60,8 @@ public class PaperController {
            System.out.println(list);
            model.addAttribute("list",list);
        }
+
+        model.addAttribute("TitleEdit", GlobalVariable.titleEdit);
        return new ModelAndView("papers","model",model);
     }
 

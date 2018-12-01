@@ -45,10 +45,10 @@ $(function(){
              }
          }
          if(num==0){
-             alert("你还没有选择要编辑的论文哦");
+             toastr.warning("你还没有选择要编辑的论文哦");
          }
          else if(num>1){
-             alert("一次只能编辑一个哦");
+             toastr.warning("一次只能编辑一个哦");
          }
          else{
              updateFormvalidator_Init();

@@ -11,7 +11,7 @@ function deletePaper(){
   }
   if(check_id.length==0)
   {
-      alert("你还没有选择要删除的论文哦");
+      toastr.warning("你还没有选择要删除的论文哦");
   }else {
       username = $("#user").attr("username");
       var data = {
@@ -30,7 +30,7 @@ function deletePaper(){
               $("#rightContainer").html(data);
           },
           error : function() {
-              alert("一不小心就出错了^_^,请刷新试试嘻嘻,还不行的话,及时联系管理员哦");
+              toastr.warning("一不小心就出错了^_^,请刷新试试嘻嘻,还不行的话,及时联系管理员哦");
           }
       });
   }
