@@ -26,4 +26,9 @@ public class UserServerImpl implements UserServer {
     public int delUserByUsername(String username) {
         return userRepository.deleteUserByUsername(username);
     }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
 }

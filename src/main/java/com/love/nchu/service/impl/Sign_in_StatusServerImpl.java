@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,5 +28,10 @@ public class Sign_in_StatusServerImpl implements Sign_in_StatusServer {
     @Override
     public int signin(String time, String username, String date) {
         return sign_in_statusRepository.singin(time,username,date);
+    }
+
+    @Override
+    public List<Sign_in_Status> getSign_in_StatusByDate(String date) {
+        return sign_in_statusRepository.getSign_in_StatusByDate(date);
     }
 }

@@ -9,7 +9,7 @@
 //public interface PermissionRepository extends JpaRepository<PerVo,String> {
 //
 //
-//    @Query("select  new PerVo(u.username,u.regisitory_date,u1.accountNonLocked) from UserInfo u ,User u1 where u.username = u1.username and u1.role='student' and u1.enabled='1' ")
+//    @Query("select  new PerVo(u.username,u.registry_date,u1.accountNonLocked) from UserInfo u ,User u1 where u.username = u1.username and u1.role='student' and u1.enabled='1' ")
 //    List<PerVo> getPerVo();
 //
 //}

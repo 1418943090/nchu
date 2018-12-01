@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>注册成功</title>
+    <style>
+        html,body{
+            height:100%;
+            margin:0px;
+        }
+
+        .bg {
+            background:url(/img/login2.jpg) fixed;
+            height:100%;
+            border: 1px solid #00457b;
+            padding: 8px;
+            font-size: .85em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="row bg">
+    <br><br><br><br><br><br><br><br>
+    <div class="container">
+        <div class="text-center">
+            <h1 style="color: white;">感谢你完成注册第二步,请等待管理员审核通过后，才能正常使用</h1>
+            <br><br>
+            <a class="btn btn-primary btn-lg" th:href="@{login}" role="button" >立即登录</a>
+            <a class="btn btn-success btn-lg" th:href="@{index}" role="button" >返回主页</a>
+            <br>
+        </div>
+    </div>
+</div>
+</body>
+</html>

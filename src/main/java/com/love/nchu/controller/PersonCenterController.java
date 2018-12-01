@@ -32,11 +32,6 @@ public class PersonCenterController {
     @GetMapping("/basic_information/{username}")
     public ModelAndView basic_Information(@PathVariable String username, Model model){
         UserInfo userInfo = userInfoServer.getUserByUsername(username);
-        if(userInfo.getSex().equals("man")){
-            userInfo.setSex("男");
-        }
-        else userInfo.setSex("女");
-        System.out.println("aadsgas");
         model.addAttribute("user_info",userInfo);
         return new ModelAndView("basic_information","basic_information",model);
     }

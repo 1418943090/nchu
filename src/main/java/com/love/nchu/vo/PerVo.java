@@ -47,7 +47,7 @@ public class PerVo implements Serializable {
         return regisitory_date;
     }
 
-    public void setRegisitory_date(String regisitory_date) {
+    public void setRegisitory_date(String registry_date) {
         this.regisitory_date = regisitory_date;
     }
 

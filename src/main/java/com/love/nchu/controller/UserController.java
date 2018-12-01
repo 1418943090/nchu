@@ -29,7 +29,6 @@ public class UserController {
         list.add(new Menu("基本信息","/basic_information/"+username));
         list.add(new Menu("发表论文","/userPapers/"+username));
         list.add(new Menu("学术研究",""));
-
         list.add(new Menu("产品","/protect/"+username));
         System.out.println("aaaa");
         System.out.println(userInfo.toString());
@@ -38,8 +37,9 @@ public class UserController {
             list.add(new Menu("签到系统","/sign_in/"+username));
         }else if(userInfo.getIdentity().equals("teacher")){
             list.add(new Menu("研究生",""));
-            list.add(new Menu("签到情况","/sign_in"));
+            list.add(new Menu("签到情况","/sign_in/show/all/today"));
             list.add(new Menu("注册申请","/review"));
+
             list.add(new Menu("自定义标题","/title_edit"));
         }
         model.addAttribute("list",list);

@@ -10,6 +10,12 @@ import java.util.HashMap;
 
 @Component
 public  class MyDate {
+
+
+
+
+
+
    public static String getDate(){
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -33,6 +39,8 @@ public  class MyDate {
         int minute = cal.get(Calendar.MINUTE);
         return hour*100+minute;
     }
+
+
 
     public static int[] get(String time){
         String[] a = time.split("~");

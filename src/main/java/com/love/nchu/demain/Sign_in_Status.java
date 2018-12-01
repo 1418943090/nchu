@@ -67,6 +67,39 @@ public class Sign_in_Status {
         return mon_out;
     }
 
+
+    public String getMon_in_class(){
+        if(mon_in==null)
+            return "danger";
+        else  return "success";
+    }
+    public String getMon_out_class(){
+        if(mon_out==null)
+            return "danger";
+        else  return "success";
+    }
+
+    public String getAft_in_class(){
+        if(aft_in==null)
+            return "danger";
+        else  return "success";
+    }
+
+    public String getAft_out_class(){
+        if(aft_out==null)
+            return "danger";
+        else  return "success";
+    }
+    public String getEve_in_class(){
+        if(eve_in==null)
+            return "danger";
+        else  return "success";
+    }
+    public String getEve_out_class(){
+        if(eve_out==null)
+            return "danger";
+        else  return "success";
+    }
     public void setMon_out(String mon_out) {
         this.mon_out = mon_out;
     }

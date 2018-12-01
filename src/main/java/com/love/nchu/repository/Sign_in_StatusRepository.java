@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -18,4 +19,7 @@ public interface Sign_in_StatusRepository extends JpaRepository<Sign_in_Status,S
     @Modifying
     @Query("update Sign_in_Status t set t=?1 where t.username=?2 and t.date=?3 ")
     int singin(String time,String username,String date);
+
+    @Query("select t from  Sign_in_Status  t where  t.date=?1")
+    List<Sign_in_Status> getSign_in_StatusByDate(String date);
 }

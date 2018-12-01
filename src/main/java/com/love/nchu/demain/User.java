@@ -14,24 +14,28 @@ public class User implements   Serializable {
     private String username;
     private String password;
     private String role;
+    private String email;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
+    private boolean fillBasicInformation;
 
     protected User(){
 
     }
-    public User(String username, String password, String role, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled) {
+
+    public User(String username, String password, String role, String email, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled, boolean fillBasicInformation) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.email = email;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.credentialsNonExpired = credentialsNonExpired;
         this.enabled = enabled;
+        this.fillBasicInformation = fillBasicInformation;
     }
-
     public String getUsername() {
         return username;
     }
@@ -54,6 +58,14 @@ public class User implements   Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean isAccountNonExpired() {
@@ -88,16 +100,26 @@ public class User implements   Serializable {
         this.enabled = enabled;
     }
 
+    public boolean isFillBasicInformation() {
+        return fillBasicInformation;
+    }
+
+    public void setFillBasicInformation(boolean fillBasicInformation) {
+        this.fillBasicInformation = fillBasicInformation;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
+                ", email='" + email + '\'' +
                 ", accountNonExpired=" + accountNonExpired +
                 ", accountNonLocked=" + accountNonLocked +
                 ", credentialsNonExpired=" + credentialsNonExpired +
                 ", enabled=" + enabled +
+                ", fillBasicInformation=" + fillBasicInformation +
                 '}';
     }
 }

@@ -45,9 +45,15 @@ public class loginController {
   @RequestMapping(value = "/login_valid",method = {RequestMethod.POST})
   public ModelAndView logining(String username,String password,HttpServletResponse response) throws Exception {
       User user = userServer.findUserByUsername(username);
-      if(user.isEnabled()==true){
+
       if (user != null) {
-          if (user.getPassword().equals(SHAencrypt.encryptSHA(password))) {
+
+          if(user.isEnabled()==true){
+              return new ModelAndView("redirect:/login_error2");
+          }
+          else if(user.isAccountNonLocked()==false){
+              return new ModelAndView("redirect:/login_error3");
+          } else if (user.getPassword().equals(SHAencrypt.encryptSHA(password))) {
               Cookie cookie = new Cookie("user", username);
               cookie.setPath("/");
               response.addCookie(cookie);
@@ -55,11 +61,8 @@ public class loginController {
           }
       }
           return new ModelAndView("redirect:/login_error");
-      } else if(user.isAccountNonLocked()==false){
-          return new ModelAndView("redirect:/login_error3");
-      }
 
-          return new ModelAndView("redirect:/login_error2");
+
 
   }
    @PostMapping("/login_success")

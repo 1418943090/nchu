@@ -10,69 +10,34 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
-    <script type="text/javascript" th:inline="javascript">
-      //恢复单选按钮状态
-        $(document).ready(function(){
-            document.getElementById("teachername").value="null";
-           if([[${sex_value}]]=="woman")
-           {
-               $("#woman").attr("checked",true);
-           }
-           if([[${sex_value}]]=="man"){
-               $("#man").attr("checked",true);
-           }
-           if([[${identity_value}]]=="teacher")
-           {
-               $("#teacher").attr("checked",true);
-               document.getElementById("teachername").value="null";
-               $("#teachername_div").hide();
+    <link href="/js/CodeSeven-toastr-50092cc/build/toastr.css" rel="stylesheet" >
+    <script src="/js/CodeSeven-toastr-50092cc/build/toastr.min.js"></script>
 
-           }
-           if([[${identity_value}]]=="student")
-           {
-               $("#student").attr("checked",true);
-               $("#teachername_div").show();
-
-           }
-
-
-                $("#datetime").datetimepicker({
-                    format: 'YYYY-MM-DD',
-                    locale: moment.locale('zh-cn')
-                });
-
-
-            $('input[name="identity"]').click(function(){
-                if($(this).val()=="teacher"){
-
-                    document.getElementById("teachername").value="null";
-
-                    $("#teachername_div").hide();
-                }
-                if($(this).val()=="student"){
-
-                    $("#teachername_div").show();
-                }
-            });
-        });
-    </script>
+    <script src="/bootstrapValidate/bootstrapValidator.css" ></script>
+    <script src="/bootstrapValidate/bootstrapValidator.js" ></script>
+    <script type="text/javascript" src="/js/admins/bootstrapValidate.js"></script>
+    <script type="text/javascript" src="/js/registry/formValidator.js"></script>
     <style>
+        .container{
+            padding-left: 12%;
+            padding-right: 12%;
+            padding-top: 5%;
+        }
+
         html,body{
             height:100%;
             margin:0px;
         }
-        .container{
-            padding-left: 12%;
-            padding-right: 12%;
-        }
         .bg {
-            background:url(/img/login2.jpg)   fixed;
-            background-size:100%;
+            background:url(/img/login2.jpg) fixed;
+            height:100%;
+            border: 1px solid #00457b;
+            padding: 8px;
+            font-size: .85em;
         }
         .title{
             color: white;
@@ -83,6 +48,31 @@
             padding-top: 1em;
         }
     </style>
+    <script type="text/javascript">
+
+        toastr.options = {
+           // closeButton: true,                                            // 是否显示关闭按钮，（提示框右上角关闭按钮）
+            // debug: false,                                                    // 是否使用deBug模式
+            // progressBar: true,                                            // 是否显示进度条，（设置关闭的超时时间进度条）
+            positionClass: 'toast-top-center',              // 设置提示款显示的位置
+            // onclick: null,                                                     // 点击消息框自定义事件 
+            // showDuration: "300",                                      // 显示动画的时间
+            // hideDuration: "1000",                                     //  消失的动画时间
+            // timeOut: "2000",                                             //  自动关闭超时时间 
+            // extendedTimeOut: "1000",                             //  加长展示时间
+            // showEasing: "swing",                                     //  显示时的动画缓冲方式
+            // hideEasing: "linear",                                       //   消失时的动画缓冲方式
+            // showMethod: "fadeIn",                                   //   显示时的动画方式
+            // hideMethod: "fadeOut"                                   //   消失时的动画方式
+        };
+
+
+        function showtoastr(){
+            toastr.error('你有新消息了！','错误提示框');
+        }
+
+
+    </script>
 </head>
 <body>
 <nav class="navbar  navbar-fixed-top">
@@ -90,7 +80,7 @@
         <div class="navbar-header">
             <ul class="nav navbar-nav navbar-left">
                 <li>
-                   <h5 class="title flag" th:text="${TitleEdit.getTitle1()}"></h5>
+                    <h5 class="title flag" th:text="${TitleEdit.getTitle1()}"></h5>
                 </li>
             </ul>
         </div>
@@ -124,24 +114,24 @@
             <h2 style="color: white">用户注册</h2>
         </div>
         <div class="well">
-            <form th:action="@{/registry_action}" id="RegisteredForm" class="form-horizontal" role="form" th:method="post" enctype="multipart/form-data" >
+            <form th:action="@{/registry_action}" id="RegistryForm" onsubmit="return false" class="form-horizontal" role="form" th:method="post" enctype="multipart/form-data" >
                 <div style="display:none">
                     <input name="flag" value="true"/>
                 </div>
                 <div class="form-group ">
                     <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>用户名:</label>  <!--placeholder="frank"  -->
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="username" name="username" th:value="${username_value}" placeholder="长度为4~16字母,数字,下划线,组成的字符串"/>
+                        <input type="text" class="form-control" id="username" name="username"  placeholder="长度为4~16字母,数字,下划线,组成的字符串"/>
                     </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${username_status}"></label>
+                    <label for="" class="col-sm-0 control-label" style="color: red" ></label>
                 </div>
                 <!--**************************************************************************************************************-->
                 <div class="form-group">
                     <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>密码:</label>
                     <div class="col-sm-5">
-                        <input type="password" class="form-control" id="firstpassword" th:value="${firstpassword_value}" name="firstpassword" placeholder="最少6位,最多20位,包括至少1个大写字母,1个小写字母,1个数字"/>
+                        <input type="password" class="form-control" id="firstpassword" name="firstpassword" placeholder="最少6位,最多20位,包括至少1个大写字母,1个小写字母,1个数字"/>
                     </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${firstpassword_status}"></label>
+                    <label for="" class="col-sm-0 control-label" style="color: red" ></label>
                     <!--**************************************************************************************************************-->
                 </div>
                 <div class="form-group">
@@ -149,115 +139,26 @@
                     <div class="col-sm-5">
                         <input type="password" class="form-control" id="secondpassword" name="secondpassword" th:value="${secondpassword_value}" placeholder="最少6位,最多20位,包括至少1个大写字母,1个小写字母,1个数字"/>
                     </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${secondpassword_status}"></label>
+                    <label for="" class="col-sm-0 control-label" style="color: red" ></label>
                 </div>
-                <!--******************************************************************************************-->
-                <div class="form-group">
-                    <label class="col-sm-4 control-label"><span style="color:red">*</span>出生日期:</label>
-                    <div class='col-sm-5'>
-                        <input type='text' class="form-control" id='datetime' name="birthDate" th:value="${birthDate_value}" placeholder="请选择你的出生日期"/>
-                    </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${birthDate_status}"></label>
-                </div>
-                <!--*********************************************************************************************-->
-                <!--***********************************************************************************************************************-->
+                 <!--***********************************************************************************************************************-->
                 <div class="form-group">
                     <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>Email:</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="email" name="email" th:value="${email_value}" placeholder="请输入Email"/>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="请输入Email"/>
                     </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${email_status}"></label>
+                    <label for="" class="col-sm-0 control-label" style="color: red" ></label>
                 </div>
-                <!--*************************************************************************************************************************-->
+                <!--***********************************************************************************************************************-->
                 <div class="form-group">
-                    <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>姓名:</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" id="name" name="name" th:value="${name_value}" placeholder="请输入真实姓名"/>
+                    <label for="" class="col-sm-4 control-label"></label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="vcode" name="vcode" placeholder="请输入验证码"/>
                     </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${name_status}"></label>
-                </div>
-                <!--**********************************************************************************************************************-->
-                <div class="form-group" id="registered_sex">
-                    <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>性别:
-                    </label>
-                    <div class="col-sm-5" >
-                        <label class="radio-inline">
-                            <input type="radio" value="man" name="sex"  id="man" checked />男性
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" value="woman" name="sex" id="woman" />女性
-                        </label>
+                    <div class="col-sm-1">
+                       <input class="btn btn-info" onclick="form_check(this,1)" value="获取验证码" size="8" maxlength="6"/>
                     </div>
-                </div>
-                <!--**********************************************************************************************************************-->
-                <div class="form-group">
-                    <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>电话:</label>
-                    <div class="col-sm-5">
-                        <input type="number" size="16" class="form-control" id="tel" name="tel" th:value="${tel_value}" placeholder="请输入电话号码" />
-                    </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${tel_status}"></label>
-                </div>
-                <!--**********************************************************************************************************************-->
-                <div class="form-group">
-                    <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>籍贯:</label>
-                    <div class="col-sm-5">
-                        <input type="text" size="16" class="form-control" id="birthplace" name="birthplace" th:value="${birthplace_value}" placeholder="请输入籍贯" />
-                    </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${birthplace_status}"></label>
-                </div>
-
-                <!--**********************************************************************************************************************-->
-                <div class="form-group">
-                    <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>目前所在高校:</label>
-                    <div class="col-sm-5">
-                        <input  size="16" class="form-control" id="school" name="school" th:value="${school_value}" placeholder="请输入目前所在高校" />
-                    </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${school_status}"></label>
-                </div>
-                <!--**********************************************************************************************************************-->
-                <div class="form-group" id="registered_identity">
-                    <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>身份:
-                    </label>
-                    <div class="col-sm-5" >
-                        <label class="radio-inline">
-                            <input type="radio" value="teacher" id="teacher" name="identity" checked/>老师
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" value="student" id="student" name="identity">学生
-                        </label>
-                    </div>
-                </div>
-                <!--******************************************************************************************************************-->
-                <div class="form-group " style="display: none"  id="teachername_div">
-                    <label for="" class="col-sm-4 control-label"><span style="color:red">*</span>指导老师:</label>
-                    <div class="col-sm-5">
-                        <input  size="16" class="form-control" id="teachername" name="teachername" th:value="${teachername_value}" placeholder="请输入老师名字"/>
-                    </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${teachername_status}"></label>
-                </div>
-                <!--******************************************************************************************************************-->
-                <div class="form-group">
-                    <label for="" class="col-sm-4 control-label"><span style="color:red">*</span>研究方向:</label>
-                    <div class="col-sm-5">
-                        <input  size="16" class="form-control" id="research_direct" name="research_direct" th:value="${research_direct_value}" placeholder="请输入研究方向"/>
-                    </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${research_direct_status}"></label>
-                </div>
-                <!--**********************************************************************************************************************-->
-                <div class="form-group">
-                    <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>个人图像:</label>
-                    <div class="col-sm-5">
-                        <input  type="file"  class="from-control" id="file" name="file" />
-                    </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${file_status}"></label>
-                </div>
-                <!--**************************************************************************************************-->
-                <div class="form-group">
-                    <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>个人简介:</label>
-                    <div class="col-sm-5">
-                        <textarea class="form-control" rows="5" id="details" name="self_introduction" th:text="${self_introduction_value}" placeholder="自我描述(身份,目前所在高校，研究方向，座右铭等)200字左右"></textarea>
-                    </div>
-                    <label for="" class="col-sm-0 control-label" style="color: red" th:text="${self_introduction_status}"></label>
+                    <label for="" class="col-sm-0 control-label" style="color: red" ></label>
                 </div>
                 <!--**********************************************************************************************************************-->
                 <div class="form-group">
@@ -266,12 +167,13 @@
                         <button class="btn btn-default btn-lg btn-block" type="reset">重置</button>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-primary btn-lg btn-block"  type="submit" >注册</button>
+                        <button class="btn btn-primary btn-lg btn-block"  onclick="form_check(null,2)" >注册</button>
                     </div>
                 </div>
 
             </form>
         </div>
+    </div>
     </div>
 </body>
 </html>

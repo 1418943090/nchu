@@ -1,13 +1,7 @@
 package com.love.nchu.demain;
 
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,9 +11,9 @@ public class UserInfo  implements Serializable {
     @Id
     private String username;
 
-    private String firstpassword;
+    @Transient
+    private String password;
 
-    private String secondpassword;
     private int age;
     private Date  birthDate;
     private String email;
@@ -34,6 +28,7 @@ public class UserInfo  implements Serializable {
     private String picture;
     @Column(length = 400)
     private String self_introduction;
+    private String registry_date;
     protected UserInfo(){
 
     }
@@ -51,51 +46,39 @@ public class UserInfo  implements Serializable {
         this.teachername = teachername;
         this.self_introduction = self_introduction;
     }
-    @NotBlank(message="请输入用户名")
-    @Pattern(regexp = "^[a-zA-Z]{1}[a-zA-Z0-9_]{3,15}",message = "请检查用户名输入是否要求")
-    public String getUsername(){return this.username;}
+
+    public String getUsername() {
+        return username;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @NotBlank(message="请输入密码")
-    @Length(max=20,message = "密码长度超过20个字符")
-    @Pattern(regexp = "^.*(?=.{6,})(?=.*\\d)(?=.*[A-Z])(?=.*[a-z]).*$",
-             message="密码安全强度不够")
-    public String getFirstpassword() {
-        return firstpassword;
-    }
-    public void setFirstpassword(String firstpassword) {
-        this.firstpassword = firstpassword;
-    }
-    @NotBlank(message="请输入密码")
-    @Length(max=20,message = "密码长度超过20个字符")
-    @Pattern(regexp = "^.*(?=.{6,})(?=.*\\d)(?=.*[A-Z])(?=.*[a-z]).*$",
-            message="密码安全强度不够")
-    public String getSecondpassword() {
-        return secondpassword;
-    }
-    public void setSecondpassword(String secondpassword) {
-        this.secondpassword = secondpassword;
-    }
-    @NotNull(message="请选择你的出生日期")
-    @Past(message = "那个时间你还没出生哦")
-    public Date getBirthDate() {
-        return birthDate;
-    }
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public String getPassword() {
+        return password;
     }
 
-    @Transient
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public int getAge() {
         return age;
     }
+
     public void setAge(int age) {
         this.age = age;
     }
 
-    @Pattern(regexp = "^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$",message = "请检查邮箱是否输入正确")
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -104,8 +87,6 @@ public class UserInfo  implements Serializable {
         this.email = email;
     }
 
-    @NotBlank(message="请输入真实姓名")
-    @Pattern(regexp = "[\u4e00-\u9fa5]{2,4}",message = "请输入正确的中文姓名")
     public String getName() {
         return name;
     }
@@ -122,7 +103,6 @@ public class UserInfo  implements Serializable {
         this.sex = sex;
     }
 
-    @Pattern(regexp = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$",message = "请输入正确的电话号码")
     public String getTel() {
         return tel;
     }
@@ -131,7 +111,14 @@ public class UserInfo  implements Serializable {
         this.tel = tel;
     }
 
-    @NotBlank(message = "请输入学校名称")
+    public String getBirthplace() {
+        return birthplace;
+    }
+
+    public void setBirthplace(String birthplace) {
+        this.birthplace = birthplace;
+    }
+
     public String getSchool() {
         return school;
     }
@@ -147,28 +134,17 @@ public class UserInfo  implements Serializable {
     public void setIdentity(String identity) {
         this.identity = identity;
     }
-    @NotBlank(message = "请输入籍贯")
-    public String getBirthplace() {
-        return birthplace;
-    }
 
-    public void setBirthplace(String birthplace) {
-        this.birthplace = birthplace;
-    }
-    @NotBlank(message = "请输入研究方向")
-    public String getResearch_direct() {
-        return research_direct;
-    }
-
-
-    @NotBlank(message = "请输入指导老师名字")
-    @Length(max=20,message = "不要调皮哦")
     public String getTeachername() {
         return teachername;
     }
 
     public void setTeachername(String teachername) {
         this.teachername = teachername;
+    }
+
+    public String getResearch_direct() {
+        return research_direct;
     }
 
     public void setResearch_direct(String research_direct) {
@@ -183,8 +159,6 @@ public class UserInfo  implements Serializable {
         this.picture = picture;
     }
 
-    @NotBlank(message = "请输入自我简介")
-    @Length(max=400,message = "简介字数超过限制了")
     public String getSelf_introduction() {
         return self_introduction;
     }
@@ -193,12 +167,19 @@ public class UserInfo  implements Serializable {
         this.self_introduction = self_introduction;
     }
 
+    public String getRegistry_date() {
+        return registry_date;
+    }
+
+    public void setRegistry_date(String registry_date) {
+        this.registry_date = registry_date;
+    }
+
     @Override
     public String toString() {
         return "UserInfo{" +
                 "username='" + username + '\'' +
-                ", firstpassword='" + firstpassword + '\'' +
-                ", secondpassword='" + secondpassword + '\'' +
+                ", password='" + password + '\'' +
                 ", age=" + age +
                 ", birthDate=" + birthDate +
                 ", email='" + email + '\'' +
@@ -212,6 +193,7 @@ public class UserInfo  implements Serializable {
                 ", research_direct='" + research_direct + '\'' +
                 ", picture='" + picture + '\'' +
                 ", self_introduction='" + self_introduction + '\'' +
+                ", registry_date='" + registry_date + '\'' +
                 '}';
     }
 }

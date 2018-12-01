@@ -1,8 +1,8 @@
 package com.love.nchu.controller;
 
 import com.love.nchu.demain.ErrorVo;
+import com.love.nchu.demain.GlobalVariable;
 import com.love.nchu.demain.Sign_in_Status;
-import com.love.nchu.demain.Sign_in_Time;
 import com.love.nchu.service.Sign_in_StatusServer;
 import com.love.nchu.service.Sign_in_TimeServer;
 import com.love.nchu.vo.MyDate;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 @RestController
 public class Sign_inController {
@@ -24,10 +26,22 @@ public class Sign_inController {
     Sign_in_TimeServer sign_in_timeServer;
     @Autowired
     Sign_in_StatusServer sign_in_statusServer;
-    Sign_in_Time sign_in_time;
 
     @Value("${spring.net.public.ip}")
     String public_ip;
+
+    @GetMapping("sign_in/show/all/{today}")
+    public ModelAndView show(@PathVariable String today, Model model){
+
+        List<Sign_in_Status> list = new ArrayList<>();
+        if(today.equals("today")){
+          list = sign_in_statusServer.getSign_in_StatusByDate(MyDate.getDate());
+        }
+        model.addAttribute("sign_in_time", GlobalVariable.sign_in_time);
+        model.addAttribute("list",list);
+        return new ModelAndView("signinshow","model",model);
+    }
+
     //用户点击签到后，判断是否满足签到条件不满足返回原因，满足后将签到时间保存到签到状态表中
     @GetMapping("/sign_in/in/{username}")
     public ErrorVo in(@PathVariable String username, HttpServletRequest request){
@@ -39,18 +53,13 @@ public class Sign_inController {
         errorVo.setData("签到失败,不是实验室环境网络");
         return errorVo;
       }
-      //检测是否重复签到，或者是否没到签到时间
-
-//        if(isTimeToSignIn()){
-//
-//        }
        boolean isSignIn = false;
        boolean signIn = false;
        String date = MyDate.getDate();
        int signTime  = MyDate.getTimeInt();
        String signTimeStr = MyDate.getTimeString();
        Sign_in_Status sign_in_status = sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(username,date);
-       HashMap<String,int[]> hash = MyDate.getTimeTable(sign_in_time);
+       HashMap<String,int[]> hash = MyDate.getTimeTable(GlobalVariable.sign_in_time);
        Set<String> s = hash.keySet();
        for(String a : s){
            System.out.println(a);
@@ -87,20 +96,14 @@ public class Sign_inController {
     //如果是新的一天则将空的签到信息存到数据中，确保有数据返回给前台
     @GetMapping("/sign_in/{username}")
     public ModelAndView Sign_in(@PathVariable String username, Model model){
-        int month = MyDate.getMonth();
-        int day = MyDate.getDay();
-        if(month>=5 && month<10){
-            sign_in_time= sign_in_timeServer.getTimeBySeason("summary");
-        }else{
-            sign_in_time = sign_in_timeServer.getTimeBySeason("spring");
-        }
+
         String s = MyDate.getDate();
         Sign_in_Status sign_in_status = sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(username,s);
         if(sign_in_status==null){
            sign_in_status = new Sign_in_Status(username,s);
            sign_in_statusServer.save(sign_in_status);
         }
-        model.addAttribute("sign_in_time",sign_in_time);
+        model.addAttribute("sign_in_time",GlobalVariable.sign_in_time);
         model.addAttribute("sign_in_status",sign_in_status);
         return new ModelAndView("signin","model",model);
     }
