@@ -11,8 +11,21 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="/js/CodeSeven-toastr-50092cc/build/toastr.css" rel="stylesheet" >
     <script src="/js/CodeSeven-toastr-50092cc/build/toastr.min.js"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style type="text/css">
+
+          html,body{
+           background:url(/img/318047.jpg) fixed;
+              background-size:100% 100%;
+              height:100%;
+              margin:0px;
+
+
+
+          }
+
+
+
         .title{
             font-size: 1.5em;
             font-weight: bold;
@@ -84,11 +97,15 @@
         <div class="col-md-3 col-xl-3">
             <div class="widget" font-size=0>
                 <h4 class="title">菜单</h4>
-                <div class="content">
-                <ul class="list-group blog-menu" th:each="menu : ${model.list}">
+                <div class="content page-sidebar">
+                <ul class="list-group blog-menu nav nav-tabs nav-stacked" >
+                <div th:each="menu : ${model.list}">
+                <li class="sticker" >
                     <a href="javascript:void(0)" class="list-group-item " style="display: block; text-align: center;" th:title="${menu.name}" th:text="${menu.name}"
                     data-th-attr="url=${menu.url}">
                     </a>
+                </li>
+                </div>
                 </ul>
                 </div>
             </div>

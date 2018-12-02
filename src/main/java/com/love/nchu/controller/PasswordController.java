@@ -1,12 +1,13 @@
 package com.love.nchu.controller;
 
 import com.love.nchu.demain.ErrorVo;
-import com.love.nchu.demain.GlobalVariable;
 import com.love.nchu.service.MailServer;
+import com.love.nchu.service.TitleEditServer;
 import com.love.nchu.service.UserServer;
 import com.love.nchu.tool.EmailTool;
 import com.love.nchu.tool.PasswordTool;
 import com.love.nchu.tool.RegistryTool;
+import com.love.nchu.tool.TitleTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,8 @@ public class PasswordController {
     @Autowired
     UserServer userServer;
 
+    @Autowired
+    TitleEditServer titleEditServer;
 
     @GetMapping("/password/login")
     public ModelAndView login(){
@@ -42,7 +45,7 @@ public class PasswordController {
     }
     @GetMapping("/ForgetOrChangePassword")
     public ModelAndView ForgetOrChangePassword(Model model){
-        model.addAttribute("TitleEdit", GlobalVariable.titleEdit);
+        model.addAttribute("TitleEdit", TitleTool.getTitle(titleEditServer));
        return new ModelAndView("ForgetOrChangePassword","model",model);
     }
     @PostMapping("/password/getVcode")
@@ -54,18 +57,24 @@ public class PasswordController {
     }
 
     @PostMapping("/password/step1")
-    public ErrorVo vcodeCheck(@RequestBody  String vcode){
+    public ErrorVo vcodeCheck(@RequestBody String vcode){
 
-        ErrorVo errorVo = new ErrorVo("");
-         if(!PasswordTool.vcoedCheck(code,vcode)){
+         ErrorVo errorVo = new ErrorVo("");
+
+
+         if(!PasswordTool.vcoedCheck(code,vcode)||date==null){
              errorVo.setData("验证码错误");
+             return errorVo;
          }
+        if(!EmailTool.isNotExpiredCheck(date,new Date())){
+            errorVo.setData("验证码已过期，请重新获取");//验证码过期
+
+        }
          return errorVo;
     }
     @GetMapping("/password/step2")
     public ModelAndView updatePassword(Model model){
-
-        model.addAttribute("TitleEdit",GlobalVariable.titleEdit);
+        model.addAttribute("TitleEdit",TitleTool.getTitle(titleEditServer));
        return new ModelAndView("updatepassword","model",model);
     }
 
@@ -98,7 +107,7 @@ public class PasswordController {
 
     @GetMapping("/password/success")
     public ModelAndView succeess(Model model){
-        model.addAttribute("TitleEdit",GlobalVariable.titleEdit);
+        model.addAttribute("TitleEdit",TitleTool.getTitle(titleEditServer));
         return new ModelAndView("changePasswordSuccess","model",model);
     }
 }

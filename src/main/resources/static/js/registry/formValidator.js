@@ -102,9 +102,10 @@ function getCode(val) {
             data: email,
             success: function (data) {
                 toastr.success("验证码已发送至你的邮箱");
+               // swal("Success!", "验证码已成功发送至你的邮箱!", "success");
             },
             error: function () {
-                toastr.error("操作失败");
+                swal("错误!", "服务器处理错误", "error");
             }
         });
 
@@ -154,10 +155,21 @@ function form_submit(){
             var jsonStr = JSON.parse(data);
             if(jsonStr.data=="")
                 window.location.href="/registry/step2";
-            toastr.error(jsonStr.data);
+           // toastr.error(jsonStr.data);
+            swal({
+                title: jsonStr.data,
+               // text: jsonStr.data,
+                icon: "warning",
+                button: "确定",
+            });
         },
         error: function () {
-            toastr.error("操作失败");
+            swal({
+                title: "Error!",
+                text: '服务器处理错误',
+                icon: "error",
+                button: "确定",
+            });
         }
     });
 

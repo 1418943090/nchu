@@ -1,0 +1,29 @@
+.container{
+    padding-left: 12%;
+    padding-right: 12%;
+    padding-top: 5%;
+}
+
+html,body{
+    height:100%;
+    width:100%;
+    margin:0px;
+}
+
+.bg {
+    background:url(/img/304234.jpg) fixed;
+    background-size:100% 100%;
+    height:100%;
+    width:100%;
+    border: 1px solid #00457b;
+    padding: 8px;
+    font-size: .85em;
+}
+.title{
+    color: white;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+.flag{
+    padding-top: 1em;
+}

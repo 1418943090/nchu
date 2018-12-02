@@ -45,10 +45,20 @@ $(function(){
              }
          }
          if(num==0){
-             toastr.warning("你还没有选择要编辑的论文哦");
+             swal({
+                 title: "请选择要编辑的论文!",
+                 text: "",
+                 icon: "warning",
+                 button: "确定",
+             });
          }
          else if(num>1){
-             toastr.warning("一次只能编辑一个哦");
+             swal({
+                 title: "一次只能编译一骗论文!",
+                 text: "",
+                 icon: "warning",
+                 button: "确定",
+             });
          }
          else{
              updateFormvalidator_Init();

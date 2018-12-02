@@ -23,4 +23,9 @@ public class TitleEditServerImpl implements TitleEditServer {
     public TitleEdit getTitle(int id) {
         return titleEditRepository.getOne(id);
     }
+
+
+    public long count(){
+      return titleEditRepository.count();
+    }
 }

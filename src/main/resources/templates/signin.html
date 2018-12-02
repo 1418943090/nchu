@@ -23,7 +23,12 @@
                     var jsonStr = JSON.parse(data);
                     if(jsonStr.data==""){
 
-                        alert("签到成功");
+                          swal({
+                                  title: "签到成功",
+                                   text: "",
+                                   icon: "success",
+                                  button: "确定",
+                                       });
 
                         setTimeout(function(){
                             $.ajax({
@@ -39,7 +44,12 @@
                         },1000);
                     }else
                     {
-                        alert(jsonStr.data);
+                          swal({
+                                   title: jsonStr.data,
+                                   text: "",
+                                   icon: "error",
+                                   button: "确定",
+                                });
                     }
 
 
@@ -70,7 +80,6 @@
                 </div>
             </div>
             <table class="table table-bordered table-hover">
-
                 <thead>
                 <tr>
                     <th class="text-center">签到<br>时刻表</th>
@@ -101,7 +110,6 @@
                     <td></td>
                     <td></td>
                     <td></td>
-
                 </tr>
                 </tbody>
             </table>

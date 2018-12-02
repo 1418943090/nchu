@@ -1,8 +1,9 @@
 package com.love.nchu.controller;
-import com.love.nchu.demain.GlobalVariable;
 import com.love.nchu.demain.User;
 import com.love.nchu.security.SHAencrypt;
+import com.love.nchu.service.TitleEditServer;
 import com.love.nchu.service.UserServer;
+import com.love.nchu.tool.TitleTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,55 +16,34 @@ import javax.servlet.http.HttpServletResponse;
 public class loginController {
     @Autowired
     UserServer userServer;
-    @GetMapping("/login_error")
-    public ModelAndView login_error(Model model){
-        model.addAttribute("errorstatus","用户名或密码错误");
-        model.addAttribute("errorstatus","用户名或密码错误");
-        model.addAttribute("TitleEdit",GlobalVariable.titleEdit);
-        return new ModelAndView("login","login",model);
-    }
-    @GetMapping("/login_error2")
-    public ModelAndView login_error2(Model model){
-        model.addAttribute("errorstatus","账号不可用");
-        model.addAttribute("errorstatus","账号不可用");
-        model.addAttribute("TitleEdit",GlobalVariable.titleEdit);
-        return new ModelAndView("login","login",model);
-    }
-    @GetMapping("/login_error3")
-    public ModelAndView login_error3(Model model){
-        model.addAttribute("errorstatus","账号被锁定");
-        model.addAttribute("errorstatus","账号被锁定");
-        model.addAttribute("TitleEdit",GlobalVariable.titleEdit);
-        return new ModelAndView("login","login",model);
-    }
+
+    @Autowired
+    TitleEditServer titleEditServer;
   @RequestMapping(value="/login",method = {RequestMethod.GET,RequestMethod.POST})
     public ModelAndView login(Model model){
 
-        model.addAttribute("TitleEdit", GlobalVariable.titleEdit);
+        model.addAttribute("TitleEdit", TitleTool.getTitle(titleEditServer));
         return new ModelAndView("login","model",model);
   }
   @RequestMapping(value = "/login_valid",method = {RequestMethod.POST})
-  public ModelAndView logining(String username,String password,HttpServletResponse response) throws Exception {
+  public String logining(String username,String password,HttpServletResponse response) throws Exception {
       User user = userServer.findUserByUsername(username);
 
       if (user != null) {
 
-          if(user.isEnabled()==true){
-              return new ModelAndView("redirect:/login_error2");
+          if(!user.isEnabled()==true){
+              return "账号不可用,请等待管理员审核通过";
           }
           else if(user.isAccountNonLocked()==false){
-              return new ModelAndView("redirect:/login_error3");
+              return "该账号已被管理员禁用,有疑问请联系管理员";
           } else if (user.getPassword().equals(SHAencrypt.encryptSHA(password))) {
               Cookie cookie = new Cookie("user", username);
               cookie.setPath("/");
               response.addCookie(cookie);
-              return new ModelAndView("redirect:/index");
+              return "success";
           }
       }
-          return new ModelAndView("redirect:/login_error");
-
-
-
+          return "账号或密码错误";
   }
    @PostMapping("/login_success")
     public ModelAndView loginsuccess(HttpServletRequest request,

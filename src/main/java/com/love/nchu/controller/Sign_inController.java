@@ -1,10 +1,10 @@
 package com.love.nchu.controller;
 
 import com.love.nchu.demain.ErrorVo;
-import com.love.nchu.demain.GlobalVariable;
 import com.love.nchu.demain.Sign_in_Status;
 import com.love.nchu.service.Sign_in_StatusServer;
 import com.love.nchu.service.Sign_in_TimeServer;
+import com.love.nchu.tool.SignInTool;
 import com.love.nchu.vo.MyDate;
 import com.love.nchu.vo.Net;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class Sign_inController {
         if(today.equals("today")){
           list = sign_in_statusServer.getSign_in_StatusByDate(MyDate.getDate());
         }
-        model.addAttribute("sign_in_time", GlobalVariable.sign_in_time);
+        model.addAttribute("sign_in_time",SignInTool.getTime(sign_in_timeServer));
         model.addAttribute("list",list);
         return new ModelAndView("signinshow","model",model);
     }
@@ -59,7 +59,7 @@ public class Sign_inController {
        int signTime  = MyDate.getTimeInt();
        String signTimeStr = MyDate.getTimeString();
        Sign_in_Status sign_in_status = sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(username,date);
-       HashMap<String,int[]> hash = MyDate.getTimeTable(GlobalVariable.sign_in_time);
+       HashMap<String,int[]> hash = MyDate.getTimeTable(SignInTool.getTime(sign_in_timeServer));
        Set<String> s = hash.keySet();
        for(String a : s){
            System.out.println(a);
@@ -103,7 +103,7 @@ public class Sign_inController {
            sign_in_status = new Sign_in_Status(username,s);
            sign_in_statusServer.save(sign_in_status);
         }
-        model.addAttribute("sign_in_time",GlobalVariable.sign_in_time);
+        model.addAttribute("sign_in_time", SignInTool.getTime(sign_in_timeServer));
         model.addAttribute("sign_in_status",sign_in_status);
         return new ModelAndView("signin","model",model);
     }

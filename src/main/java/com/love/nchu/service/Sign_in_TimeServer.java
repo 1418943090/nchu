@@ -7,4 +7,5 @@ public interface Sign_in_TimeServer {
     void save(Sign_in_Time sign_in_time);
 
     Sign_in_Time getTimeBySeason(String seasonm);
+    long count();
 }

@@ -6,4 +6,5 @@ public interface TitleEditServer {
 
       void save(TitleEdit titleedit);
       TitleEdit getTitle(int id);
+      long count();
 }

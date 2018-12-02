@@ -1,9 +1,10 @@
 package com.love.nchu.controller;
 
-import com.love.nchu.demain.GlobalVariable;
 import com.love.nchu.demain.Paper;
 import com.love.nchu.service.PaperServer;
+import com.love.nchu.service.TitleEditServer;
 import com.love.nchu.service.UserInfoServer;
+import com.love.nchu.tool.TitleTool;
 import com.love.nchu.vo.deletePaperVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -16,7 +17,8 @@ import java.util.List;
 public class PaperController {
     @Autowired
     private PaperServer paperServer;
-
+    @Autowired
+    private TitleEditServer titleEditServer;
     @Autowired
     private UserInfoServer userInfoServer;
     //删除论文控制器
@@ -39,7 +41,7 @@ public class PaperController {
        List<Paper> list = paperServer.getAllPapers();
        model.addAttribute("list",list);
        System.out.println(list);
-       model.addAttribute("TitleEdit", GlobalVariable.titleEdit);
+       model.addAttribute("TitleEdit", TitleTool.getTitle(titleEditServer));
        return new ModelAndView("papers","model",model);
     }
 
@@ -61,7 +63,7 @@ public class PaperController {
            model.addAttribute("list",list);
        }
 
-        model.addAttribute("TitleEdit", GlobalVariable.titleEdit);
+        model.addAttribute("TitleEdit", TitleTool.getTitle(titleEditServer));
        return new ModelAndView("papers","model",model);
     }
 

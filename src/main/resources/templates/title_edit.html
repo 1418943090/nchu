@@ -8,11 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script type="text/javascript" src="/js/admins/jquery.form.js"></script>
     <script type="text/javascript">
-
         function saveReport() {
-
             $("#TitleEditForm").ajaxSubmit(function(message) {
-                toastr.warning(message);
+                swal({
+                                     title: "修改成功",
+                                     text: "",
+                                     icon: "success",
+                                      button: "确定",
+                                    });
             });
             return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
         }

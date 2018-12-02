@@ -2,6 +2,7 @@ package com.love.nchu.tool;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Random;
 
 @Component
@@ -18,5 +19,12 @@ public class EmailTool {
             str.append(num);
         }
         return str.toString();
+    }
+
+    public static boolean isNotExpiredCheck(Date date1, Date date2){
+         if(date2.getTime()-date1.getTime()>1000*10*60){
+             return false;
+         }
+         return true;
     }
 }

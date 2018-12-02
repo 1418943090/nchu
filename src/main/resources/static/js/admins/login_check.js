@@ -34,7 +34,21 @@ function login_check(){
     }
 
     function submit(){
-        document.getElementById("loginForm").submit();//js原生方式表单提交
-        $("#loginForm").submit();
+       // document.getElementById("loginForm").submit();//js原生方式表单提交
+       // $("#loginForm").submit();
+
+        $("#loginForm").ajaxSubmit(function(message) {
+            if(message=='success')
+                window.location.href="/index";
+           else{
+             //  toastr.warning(message);
+              swal({
+                title: message,
+                text: "",
+                icon: "warning",
+                button: "确定",
+            });
+           }
+        });
     }
 }

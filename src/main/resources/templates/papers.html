@@ -9,28 +9,13 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="/js/CodeSeven-toastr-50092cc/build/toastr.css" rel="stylesheet" >
      <script src="/js/CodeSeven-toastr-50092cc/build/toastr.min.js"></script>
-
+     <link rel="stylesheet" type="text/css" href="/js/main.css">
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
         .container{
-
             padding-top: 5%;
             padding-left: 5%;
-        }
-        html,body{
-            height:100%;
-            margin:0px;
-        }
-        body {
-            background:url(/img/login2.jpg) fixed;
-        }
-        .bg{
-
-            font-size: .85em;
-        }
-        .title{
-            color: white;
-            font-size: 1.3em;
-            font-weight: bold;
+            padding-right: 2%;
         }
         .paper-author{
             font-size:1.5em;
@@ -78,7 +63,12 @@
         function search(){
             var str = document.getElementById("input_search").value;
            if(str==""){
-                toastr.warning("你还没有输入搜索内容哦");
+                 swal({
+                      title: "你还没有输入要搜索的内容哦",
+                      text: "",
+                      icon: "warning",
+                       button: "确定",
+                     });
            }
            else {
                if (document.getElementById("all").checked == true) {

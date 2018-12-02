@@ -32,12 +32,27 @@ function del(list){
         }
     }
     if(review_id.length==0){
-        toastr.warning("你还没有选择要处理的请求");
+        swal({
+            title: "你还没有选择要删除的请求哦!",
+            text: "",
+            icon: "warning",
+            button: "确定",
+        });
     }else{
-        toastr.warning("温馨提示:删除操作只是删除记录,并不会对之前的处理结果产生影响.");
-        submitDeal(review_id,"/review/del");
+        //toastr.warning("温馨提示:删除操作只是删除记录,并不会对之前的处理结果产生影响.");
+        swal({
+            title: "温馨提示",
+            text: "删除操作只是删除记录,并不会对之前的处理结果产生影响!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    submitDeal(review_id,"/review/del");
+                }
+            });
     }
-
 }
 
 function fa(list,type){
@@ -53,10 +68,20 @@ function fa(list,type){
         }
     }
     if (num == 0) {
-        toastr.warning("你还没有选择要处理的申请哦");
+        swal({
+            title: "你还没有选择要处理的请求哦!",
+            text: "",
+            icon: "warning",
+            button: "确定",
+        });
     }
     else if (num > 1) {
-        toastr.warning("一次只能处理一个申请哦");
+        swal({
+            title: "一次只能处理一个请求哦!",
+            text: "",
+            icon: "warning",
+            button: "确定",
+        });
     }else{
     var n = 0;
     var date;
@@ -67,7 +92,13 @@ function fa(list,type){
         }
      }
    if(date.status=="已处理"){
-       toastr.warning("该请求已被处理，无法重复处理");
+      // toastr.warning("该请求已被处理，无法重复处理");
+       swal({
+           title: "该请求已被处理，无法重复处理!",
+           text: "",
+           icon: "warning",
+           button: "确定",
+       });
    }
    else{
        var url;
@@ -93,7 +124,12 @@ function submitDeal(data,url){
             $("#rightContainer").html(data);
         },
         error: function() {
-            toastr.error("操作失败");
+            swal({
+                title: "操作失败",
+                text: "",
+                icon: "error",
+                button: "确定",
+            });
         }
     });
 

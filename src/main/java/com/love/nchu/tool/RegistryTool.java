@@ -38,7 +38,7 @@ public class RegistryTool {
    //邮箱是否已经被注册
    public static boolean isEmailExist(UserServer userServer,String email){
 
-       User user = userServer.findUserByUsername(email);
+       User user = userServer.findUserByEmail(email);
        if(user==null){
            return false;
        }

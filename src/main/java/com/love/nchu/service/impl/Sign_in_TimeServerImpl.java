@@ -27,4 +27,8 @@ public class Sign_in_TimeServerImpl implements Sign_in_TimeServer {
 
         sign_in_timeRepository.save(sign_in_time);
     }
+
+    public long count(){
+        return sign_in_timeRepository.count();
+    }
 }

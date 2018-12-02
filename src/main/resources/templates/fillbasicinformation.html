@@ -22,7 +22,7 @@
     <script type="text/javascript" src="/js/admins/bootstrapValidate.js"></script>
     <script type="text/javascript" src="/js/registry/BasicInformationForm.js"></script>
     <script type="text/javascript" src="/js/admins/jquery.form.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="/js/main.css">
     <script type="text/javascript" th:inline="javascript">
 
         //恢复单选按钮状态
@@ -89,32 +89,13 @@
             // hideMethod: "fadeOut"                                   //   消失时的动画方式
         };
 
-
-
     </script>
     <style>
-        html,body{
-            height:100%;
-            margin:0px;
-            background:url(/img/login2.jpg) fixed;
-        }
-        .container{
-            padding-left: 12%;
-            padding-right: 12%;
-        }
-        .bg {
+      .container{
+      padding-top: 2%;
+      }
+</style>
 
-            font-size: .85em;
-        }
-        .title{
-            color: white;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        .flag{
-            padding-top: 1em;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar  navbar-fixed-top" role="navigation">
@@ -171,7 +152,7 @@
                 <div class="form-group">
                     <label for="" class="col-sm-4 control-label"><span style="color: red">*</span>密码:</label>
                     <div class="col-sm-5">
-                        <input type="password" class="form-control" id="password"  name="password" placeholder="最少6位,最多20位,包括至少1个大写字母,1个小写字母,1个数字"/>
+                        <input type="password" class="form-control" id="password"  name="password" placeholder="长度为4~16字母,数字,下划线,组成的字符串"/>
                     </div>
                     <label for="" class="col-sm-0 control-label" style="color: red" ></label>
                     <!--**************************************************************************************************************-->

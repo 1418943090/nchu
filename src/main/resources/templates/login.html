@@ -5,41 +5,35 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/bootstrapValidate/bootstrapValidator.css" ></script>
     <script src="/bootstrapValidate/bootstrapValidator.js" ></script>
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="/js/bootstrapValidate.js"></script>
+     <link href="/js/CodeSeven-toastr-50092cc/build/toastr.css" rel="stylesheet" >
+        <script src="/js/CodeSeven-toastr-50092cc/build/toastr.min.js"></script>
     <script  src="/js/admins/login_check.js"></script>
-    <style>
-
-        .container{
-            padding-left: 12%;
-            padding-right: 12%;
-            padding-top: 5%;
-        }
-
-        html,body{
-            height:100%;
-            margin:0px;
-        }
-
-        .bg {
-            background:url(/img/login2.jpg) fixed;
-            height:100%;
-            border: 1px solid #00457b;
-            padding: 8px;
-            font-size: .85em;
-        }
-        .title{
-            color: white;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        .flag{
-            padding-top: 1em;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/js/main.css">
+    <script type="text/javascript" src="/js/admins/jquery.form.js"></script>
+    <script type="text/javascript">
+       toastr.options = {
+               // closeButton: true,                                            // 是否显示关闭按钮，（提示框右上角关闭按钮）
+                // debug: false,                                                    // 是否使用deBug模式
+                // progressBar: true,                                            // 是否显示进度条，（设置关闭的超时时间进度条）
+                positionClass: 'toast-top-center',              // 设置提示款显示的位置
+                // onclick: null,                                                     // 点击消息框自定义事件 
+                // showDuration: "300",                                      // 显示动画的时间
+                // hideDuration: "1000",                                     //  消失的动画时间
+                // timeOut: "2000",                                             //  自动关闭超时时间 
+                // extendedTimeOut: "1000",                             //  加长展示时间
+                // showEasing: "swing",                                     //  显示时的动画缓冲方式
+                // hideEasing: "linear",                                       //   消失时的动画缓冲方式
+                // showMethod: "fadeIn",                                   //   显示时的动画方式
+                // hideMethod: "fadeOut"                                   //   消失时的动画方式
+            };
+</script>
 </head>
 <body>
 <nav class="navbar  navbar-fixed-top">
@@ -110,7 +104,8 @@
                 <div>
                     <label for="" class="col-sm-7 control-label"></label>
                     <div class="col-md-5">
-                        <a th:href="@{/forgetPassword}">忘记密码?</a><br><a th:href="@{/registry}">没有账号?立即注册</a>
+                        <a th:href="@{/ForgetOrChangePassword}">忘记密码?</a><br><a th:href="@{/registry}">没有账号?立即注册</a>
+                        <br><a th:href="@{/registry/fillbasicinformation}">我已经注册,没有完善个人信息</a>
                     </div>
                 </div>
                 <br><br><br>

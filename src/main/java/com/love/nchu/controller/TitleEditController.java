@@ -2,6 +2,7 @@ package com.love.nchu.controller;
 
 import com.love.nchu.demain.TitleEdit;
 import com.love.nchu.service.TitleEditServer;
+import com.love.nchu.tool.TitleTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,7 @@ public class TitleEditController {
     @GetMapping("/title_edit")
     public ModelAndView titleEdit(Model model){
 
-        TitleEdit titleEdit = titleEditServer.getTitle(1);
-        model.addAttribute("TitleEdit",titleEdit);
+        model.addAttribute("TitleEdit", TitleTool.getTitle(titleEditServer));
         return new ModelAndView("title_edit","model",model);
     }
 
