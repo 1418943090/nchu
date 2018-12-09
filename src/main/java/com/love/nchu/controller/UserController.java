@@ -23,7 +23,7 @@ public class UserController {
     UserInfoServer userInfoServer;
     @Autowired
     TitleEditServer titleEditServer;
-    @GetMapping("user/{username}")
+    @GetMapping("/user/{username}")
     public ModelAndView user(@PathVariable("username") String username, Model model){
 
         UserInfo userInfo = userInfoServer.getUserByUsername(username);

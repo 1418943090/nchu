@@ -18,16 +18,14 @@ public class basicInformationController {
     UserInfoServer userInfoServer;
 
     @RequestMapping("/update/basic_information")
-    public ErrorVo update(@RequestBody  editUserInfo userInfo, Model model){
+    public Object update(@RequestBody  editUserInfo userInfo, Model model){
 
 
         ErrorVo error = new ErrorVo("");
         UserInfo u = userInfoServer.getUserByEmail(userInfo.getEditEmail());
-
         if(u!=null && !u.getUsername().equals(userInfo.getEditUsername())){
             error.setData("邮箱已被注册");
         }else{
-
             u = userInfoServer.getUserByTel((userInfo.getEditTel()));
             if(u!=null && !u.getUsername().equals(userInfo.getEditUsername()))
             {
@@ -38,6 +36,6 @@ public class basicInformationController {
         if(error.getData().equals("")){
             userInfoServer.updateUserInfo(userInfo);
         }
-        return error;
+           return error;
     }
 }

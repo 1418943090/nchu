@@ -71,30 +71,35 @@
             </div>
             <ul class="breadcrumb">
             	<li class="active"><a href="#">按日显示</a></li>
-            	<li><a onclick="showweek();">按周显示</a></li>
+            	<li><a href="#">按周显示</a></li>
             	<li ><a href="#">按月显示</a></li>
+            	<li ><a href="#">按年显示</a></li>
             </ul>
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
                     <th class="text-center">用户名</th>
-                    <th class="text-center">上午•签到<br><p th:text="${sign_in_time.mon_in}"></p></th>
-                    <th class="text-center">上午•签离<br><p th:text="${sign_in_time.mon_out}"></p></th>
-                    <th class="text-center">下午•签到<br><p th:text="${sign_in_time.aft_in}"></p></th>
-                    <th class="text-center">下午•签离<br><p th:text="${sign_in_time.aft_out}"></p></th>
-                    <th class="text-center">晚上•签到<br><p th:text="${sign_in_time.eve_in}"></p></th>
-                    <th class="text-center">晚上•签离<br><p th:text="${sign_in_time.eve_out}"></p></th>
+                    <th class="text-center">Monday<br><P th:text="${date[0]}"></P></th>
+                    <th class="text-center">Tuesday<br><P th:text="${date[1]}"></P></th>
+                    <th class="text-center">Wednesday<br><P th:text="${date[2]}"></P></th>
+                    <th class="text-center">Thursday<br><P th:text="${date[3]}"></P></th>
+                    <th class="text-center">Friday<br><P th:text="${date[4]}"></P></th>
+                    <th class="text-center">Saturday<br><P th:text="${date[5]}"></P></th>
+                    <th class="text-center">Sunday<br><P th:text="${date[6]}"></P></th>
+                    <th class="text-center">Count</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="sign_in_status : ${model.list}">
-                    <td class="text-center "  th:text="${sign_in_status.username}"></td>
-                    <td th:attr="class=${sign_in_status.getMon_in_class()}" ><p class="text-center"  th:text="${sign_in_status.getMon_in()}"></p></td>
-                    <td th:attr="class=${sign_in_status.getMon_out_class()}" ><p class="text-center"  th:text="${sign_in_status.getMon_out()}"></p></td>
-                    <td th:attr="class=${sign_in_status.getAft_in_class()}" ><p class="text-center"   th:text="${sign_in_status.getAft_in()}"></p></td>
-                    <td th:attr="class=${sign_in_status.getAft_out_class()}" ><p class="text-center"   th:text="${sign_in_status.getAft_out()}"></p></td>
-                    <td th:attr="class=${sign_in_status.getEve_in_class()}"><p class="text-center"   th:text="${sign_in_status.getEve_in()}"></p></td>
-                    <td th:attr="class=${sign_in_status.getEve_out_class()}" ><p class="text-center"   th:text="${sign_in_status.getEve_out()}"></p></td>
+                <tr th:each="weekShow: ${model.list}">
+                    <td class="text-center "  th:text="${weekShow.username}"></td>
+                    <td ><p class="text-center"  th:text="${weekShow.getMonday()}"></p></td>
+                    <td ><p class="text-center"  th:text="${weekShow.getTuesday()}"></p></td>
+                    <td ><p class="text-center"   th:text="${weekShow.getWednesday()}"></p></td>
+                    <td ><p class="text-center"   th:text="${weekShow.getThursday()}"></p></td>
+                    <td ><p class="text-center"   th:text="${weekShow.getFriday()}"></p></td>
+                    <td ><p class="text-center"   th:text="${weekShow.getSaturday()}"></p></td>
+                    <td ><p class="text-center"   th:text="${weekShow.getSunday()}"></p></td>
+                    <td><P class="text-center" th:text="${weekShow.getCount()}"></P></td>
                 </tr>
                 </tbody>
             </table>

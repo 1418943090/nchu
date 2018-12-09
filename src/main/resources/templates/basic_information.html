@@ -1,5 +1,3 @@
-
-<!--个人基础信息展示页面-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
@@ -9,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="/bootstrapValidate/bootstrapValidator.css" ></script>
     <script src="/bootstrapValidate/bootstrapValidator.js" ></script>
-    <script type="text/javascript" src="/js/admins/bootstrapValidate.js"></script>
-    <script th:inline="javascript" src="/js/admins/basic_information_edit.js"></script>
     <style type="text/css">
         span{font-size:25px}
         p{font-size:25px}
@@ -20,14 +16,10 @@
     </style>
     <script th:inline="javascript">
         function cancer() {
-
             // $("#editForm").data('bootstrapValidator').destroy();
             // $('#editForm').data('bootstrapValidator', null);
         }
-
         $(function(){
-
-
             function edit_form_validator_Init() {
                 $('#editForm').bootstrapValidator({
                     feedbackIcons: {
@@ -44,7 +36,7 @@
                                 stringLength: {
                                     min: 3,
                                     max: 30,
-                                    message: '这个学校名好像不存在哦，要写全名哦'
+                                    message: '这个学校名好像不存在哦,要写全名哦'
                                 }
                             }
                         },
@@ -89,7 +81,7 @@
                                 },
                                 stringLength: {
                                     max: 120,
-                                    message: '不是警察办案，不用太详细哦'
+                                    message: '不是警察办案,不用太详细哦'
                                 },
 
                             }
@@ -141,7 +133,6 @@
                     "editSelf_Introduction":self_introduction,
                     "editIdentity":identity
                 }
-
                 $.ajax
                 ({
                     url: '/update/basic_information',
@@ -153,15 +144,13 @@
                     success: function (a) {
                         var jsonStr = JSON.parse(a);
                         var obj = document.getElementById("error_data");
-
                         if(jsonStr.data!=""){
                             obj.innerText= jsonStr.data;
                             $("#error").attr("class","alert alert-danger col-sm-5 alert-dismissible");
                         }else{
-
                             setTimeout(function(){
                                 $("#show_basic_Information_Edit_Modal").modal('hide');
-                            },500);
+                            },200);
                             setTimeout(function(){
                             $.ajax({
                                 url: /basic_information/+username,
@@ -178,7 +167,7 @@
                                                  });
                                 }
                             });
-                            },1000);
+                            },400);
                         }
 
                     },

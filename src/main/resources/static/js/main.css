@@ -9,14 +9,13 @@ html,body{
     width:100%;
     margin:0px;
 }
-
-.bg {
+body{
     background:url(/img/304234.jpg) fixed;
     background-size:100% 100%;
-    height:100%;
-    width:100%;
-    border: 1px solid #00457b;
-    padding: 8px;
+}
+.bg {
+    /*border: 1px solid #00457b;*/
+    /*padding: 8px;*/
     font-size: .85em;
 }
 .title{
@@ -26,4 +25,5 @@ html,body{
 }
 .flag{
     padding-top: 1em;
+    white-space:nowrap;
 }

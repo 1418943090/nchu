@@ -1,6 +1,9 @@
 package com.love.nchu.controller;
 
-import com.love.nchu.demain.*;
+import com.love.nchu.demain.ErrorVo;
+import com.love.nchu.demain.ReviewTable;
+import com.love.nchu.demain.User;
+import com.love.nchu.demain.UserInfo;
 import com.love.nchu.security.SHAencrypt;
 import com.love.nchu.service.*;
 import com.love.nchu.tool.EmailTool;
@@ -47,7 +50,7 @@ public class RegistryController {
     String code;
     Date date;
 
-    @PostMapping("registry/email/code")
+    @PostMapping("/registry/email/code")
     public void getCode(@RequestBody String email) {
         date = new Date();
         System.out.println(email);

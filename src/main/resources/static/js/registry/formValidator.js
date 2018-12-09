@@ -17,7 +17,7 @@ $(function(){
                             message: '请输入用户名'
                         },
                         stringLength: {
-                            min: 3,
+                            min: 2,
                             max: 30,
                             message: '用户名格式不正确'
                         }

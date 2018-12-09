@@ -6,6 +6,8 @@ import com.love.nchu.service.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServerImpl implements UserServer {
 
@@ -30,5 +32,10 @@ public class UserServerImpl implements UserServer {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public List<String> getAllUsername() {
+        return userRepository.getAllUsernmae();
     }
 }

@@ -3,10 +3,9 @@ package com.love.nchu.vo;
 import com.love.nchu.demain.Sign_in_Time;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 @Component
 public  class MyDate {
@@ -83,5 +82,30 @@ public  class MyDate {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
        return  cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+
+    public static List<String> getWeekDays(String date, String dateFormat, boolean isChina) throws ParseException {
+        List<String> list  = new ArrayList<String>();
+        Calendar c = Calendar.getInstance(Locale.CHINA);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        c.setTime(sdf.parse(date));
+        int currentYear=c.get(Calendar.YEAR);
+        int weekIndex = c.get(Calendar.WEEK_OF_YEAR);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        if(dayOfWeek==1&&isChina){
+            c.add(Calendar.DAY_OF_MONTH,-1);
+            String date_str = sdf.format(c.getTime());
+            list=getWeekDays(date_str,dateFormat,isChina);
+        }
+        else{
+            c.setWeekDate(currentYear, weekIndex, 1);
+            for(int i=1;i<=7;i++){
+                c.add(Calendar.DATE, 1);
+                String date_str = sdf.format(c.getTime());
+                list.add(date_str);
+            }
+        }
+        return list;
     }
 }

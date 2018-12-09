@@ -68,40 +68,8 @@ $(function(){
              $('#updateModal').modal('show');
          }
      });
-    //
-    // $('.card').on('click','.btn-upd',function(){
-    //
-    //     var obj = document.getElementsByName("cb");
-    //     var num=0;
-    //     var k;
-    //     var id;
-    //     var title;
-    //     for(k in obj){
-    //         if(obj[k].checked){
-    //             num++;
-    //             id=obj[k].id;
-    //             title=obj[k].title;
-    //         }
-    //     }
-    //     if(num==0){
-    //         alert("你还没有选择要编辑的论文哦");
-    //     }
-    //     else if(num>1){
-    //         alert("一次只能编辑一个哦");
-    //
-    //     }
-    //     else{
-    //         updateFormvalidator_Init();
-    //         document.getElementById("updateTitle").value = title;
-    //         $('#updateModal').modal('show');
-    //     }
-    // });
-    // $('.card').off('click','.btn-upd',function(){
-    // });
 });
 function update_check(){
-    // $("#upForm").data('bootstrapValidator').destroy();
-    // $('#upForm').data('bootstrapValidator', null);
     var bootstrapValidator = $('#updateForm').data('bootstrapValidator');
     bootstrapValidator.validate();
     if(bootstrapValidator.isValid()){//如果校验成功后执行的操作

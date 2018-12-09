@@ -4,9 +4,11 @@ import com.love.nchu.demain.ErrorVo;
 import com.love.nchu.demain.Sign_in_Status;
 import com.love.nchu.service.Sign_in_StatusServer;
 import com.love.nchu.service.Sign_in_TimeServer;
+import com.love.nchu.service.UserServer;
 import com.love.nchu.tool.SignInTool;
 import com.love.nchu.vo.MyDate;
 import com.love.nchu.vo.Net;
+import com.love.nchu.vo.weekShow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
@@ -27,18 +29,108 @@ public class Sign_inController {
     @Autowired
     Sign_in_StatusServer sign_in_statusServer;
 
+    @Autowired
+    UserServer userServer;
     @Value("${spring.net.public.ip}")
     String public_ip;
 
-    @GetMapping("sign_in/show/all/{today}")
-    public ModelAndView show(@PathVariable String today, Model model){
+    @GetMapping("/sign_in/show/week/{date}")
+    public ModelAndView weekShow(Model model,@PathVariable  String date) throws Exception{
 
+        System.out.println("afa");
+        System.out.println(date);
+
+        Sign_in_Status sign_in_status ;
+
+       List<String> list = MyDate.getWeekDays(date,"yyyy-MM-dd",true);
+
+       List<weekShow> list2 = new ArrayList<>();
+       //System.out.print(list2);
+
+         List<Sign_in_Status> list3 = new ArrayList<>();
+
+         List<String> user = userServer.getAllUsername();
+        for(int i=0;i<user.size();i++){
+
+
+            weekShow w = new weekShow(user.get(i),0,0,0,0,0,0,0);
+
+           if(( sign_in_status =  sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(user.get(i),list.get(0)))==null){
+             w.setMonday(6);
+           }else{
+               w.setMonday(sign_in_status.getCount());
+           }
+
+            if(( sign_in_status =  sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(user.get(i),list.get(1)))==null){
+                w.setTuesday(6);
+            }else{
+                w.setTuesday(sign_in_status.getCount());
+            }
+
+
+            if(( sign_in_status =  sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(user.get(i),list.get(2)))==null){
+                w.setWednesday(6);
+            }else{
+                w.setWednesday(sign_in_status.getCount());
+            }
+
+
+
+            if(( sign_in_status =  sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(user.get(i),list.get(3)))==null){
+                w.setThursday(6);
+            }else{
+                w.setThursday(sign_in_status.getCount());
+            }
+
+            if(( sign_in_status =  sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(user.get(i),list.get(4)))==null){
+                w.setFriday(6);
+            }else{
+                w.setFriday(sign_in_status.getCount());
+            }
+
+            if(( sign_in_status =  sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(user.get(i),list.get(5)))==null){
+                w.setSaturday(6);
+            }else{
+                w.setSaturday(sign_in_status.getCount());
+            }
+
+            if(( sign_in_status =  sign_in_statusServer.getSign_in_StatusByUsernaemAndDate(user.get(i),list.get(6)))==null){
+                w.setSunday(6);
+            }else{
+                w.setSunday(sign_in_status.getCount());
+            }
+
+            list2.add(w);
+            }
+
+            System.out.println(list2);
+
+        model.addAttribute("date",list);
+        model.addAttribute("list",list2);
+       // return null;
+        return new ModelAndView("signinshow_week","model",model);
+    }
+
+
+    @GetMapping("/sign_in/show/all/{date}")
+    public ModelAndView show(@PathVariable String date, Model model){
+
+        String d = "";
         List<Sign_in_Status> list = new ArrayList<>();
-        if(today.equals("today")){
-          list = sign_in_statusServer.getSign_in_StatusByDate(MyDate.getDate());
+        if(date.equals("today")){
+            d = MyDate.getDate();
+            list = sign_in_statusServer.getSign_in_StatusByDate(d);
+
+
         }
+        else{
+            list = sign_in_statusServer.getSign_in_StatusByDate(date);
+            d = date;
+        }
+
         model.addAttribute("sign_in_time",SignInTool.getTime(sign_in_timeServer));
         model.addAttribute("list",list);
+        model.addAttribute("date",d);
         return new ModelAndView("signinshow","model",model);
     }
 
@@ -49,10 +141,10 @@ public class Sign_inController {
       ErrorVo errorVo = new ErrorVo("");
         //ip校验
       String ip = Net.getIP(request);
-      if(!ip.equals(public_ip)){
-        errorVo.setData("签到失败,不是实验室环境网络");
-        return errorVo;
-      }
+//      if(!ip.equals(public_ip)){
+//        errorVo.setData("签到失败,不是实验室环境网络");
+//        return errorVo;
+//      }
        boolean isSignIn = false;
        boolean signIn = false;
        String date = MyDate.getDate();
@@ -76,6 +168,7 @@ public class Sign_inController {
                }
                if(isSignIn == false) {
                    signIn = true;
+                  // sign_in_status.setCount(sign_in_status.getCount()-1);
                    sign_in_statusServer.save(sign_in_status);//将签到信息存储到数据库中
                }
              break;
